@@ -3,6 +3,7 @@ package dev.itaprev.controller;
 import dev.itaprev.dao.ConsignadoDAOImpl;
 import dev.itaprev.dto.CompetenciaDTO;
 import dev.itaprev.dto.ConsignadoDTO;
+import dev.itaprev.dto.MudancaDTO;
 import dev.itaprev.dto.ResultadoComparacaoDTO;
 import dev.itaprev.model.Consignado;
 import dev.itaprev.tools.LeitorExcel;
@@ -153,25 +154,10 @@ public class ConsignadoController {
         return resultadosDTO;
     }
 
-    public void salvarConsignado(ConsignadoDTO consignadoDTO) {
-        Consignado consignado = new Consignado(
-            consignadoDTO.contrato(),
-            consignadoDTO.nome(),
-            consignadoDTO.cpf(),
-            consignadoDTO.matricula(),
-            consignadoDTO.prazoTotal(),
-            consignadoDTO.numeroPrestacao(),
-            consignadoDTO.valorPrestacao(),
-            consignadoDTO.idCompetencia()
-        );
+    public void salvarMudancasDTO(List<MudancaDTO> mudancaDTOs) {
         ConsignadoDAOImpl dao = new ConsignadoDAOImpl();
-        dao.salvar(consignado);
-    }
-
-    public void salvarResultadosApurados(ResultadoComparacaoDTO resultados) {
-        ConsignadoDAOImpl dao = new ConsignadoDAOImpl();
-
-        for (Consignado consignado : resultados.acatados()) {
+        for (MudancaDTO dto : mudancaDTOs) {
+            Consignado consignado = converterParaModel(dto.consignado());
             dao.salvar(consignado);
         }
     }
@@ -197,6 +183,19 @@ public class ConsignadoController {
             consignado.getNumeroPrestacao(),
             consignado.getValorPrestacao(),
             consignado.getIdCompetencia()
+        );
+    }
+
+    public Consignado converterParaModel(ConsignadoDTO dto) {
+        return new Consignado(
+            dto.contrato(),
+            dto.nome(),
+            dto.cpf(),
+            dto.matricula(),
+            dto.prazoTotal(),
+            dto.numeroPrestacao(),
+            dto.valorPrestacao(),
+            dto.idCompetencia()
         );
     }
 }

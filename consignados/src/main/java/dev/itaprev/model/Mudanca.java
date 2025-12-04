@@ -9,8 +9,13 @@ public class Mudanca {
         this.motivo = motivo;
     }
 
+    public Mudanca() {}
+
     public Consignado getConsignado() {
         return consignado;
+    }
+    public void setConsignado(Consignado consignado) {
+        this.consignado = consignado;
     }
     public MotivoMudanca getMotivo() {
         return motivo;
