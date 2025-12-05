@@ -70,7 +70,7 @@ public class ConsignadoController {
         System.out.println("Exclusões: " + exclusoes.size());
         System.out.println("----------------------------------");
 
-        return new ResultadoComparacaoDTO(divergencias, acatados, exclusoes);
+        return new ResultadoComparacaoDTO(divergencias, acatados, exclusoes, idCompetencia);
     }
 
     public ArrayList<Consignado> importarConsignados(int idCompetencia) {
@@ -164,7 +164,14 @@ public class ConsignadoController {
 
     public int buscarIdConsignado(String contrato, int idcompetencia) {
         ConsignadoDAOImpl dao = new ConsignadoDAOImpl();
-        return dao.buscarIdConsignado(contrato, idcompetencia);
+        int id = dao.buscarIdConsignado(contrato, idcompetencia);
+        if (id == -1) {
+            System.out.println("Consignado não encontrado: Contrato " + contrato + ", Competência ID " + idcompetencia);
+            return 0;
+        } else {
+            System.out.println("Consignado encontrado: Contrato " + contrato + ", Competência ID " + idcompetencia + ", ID Consignado " + id);
+            return id;
+        }
     }
 
     public ConsignadoDTO buscarPorId(int idconsignado) {

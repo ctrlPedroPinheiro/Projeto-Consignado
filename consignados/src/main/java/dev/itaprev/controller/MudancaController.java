@@ -5,6 +5,7 @@ import java.util.List;
 import dev.itaprev.dao.MudancaDAO;
 import dev.itaprev.dao.MundacaDAOImpl;
 import dev.itaprev.dto.MudancaDTO;
+import dev.itaprev.model.MotivoMudanca;
 import dev.itaprev.model.Mudanca;
 
 public class MudancaController {
@@ -17,11 +18,16 @@ public class MudancaController {
     }
 
     public void salvarMudancasDTO(List<MudancaDTO> paraAcatar, List<MudancaDTO> paraExcluir) {
+
         for (MudancaDTO mudanca : paraAcatar) {
-            mudancaDAO.salvarMudanca(converterMudancaDTO(mudanca));
+            if (mudanca.motivo() != MotivoMudanca.NULO) {
+                mudancaDAO.salvarMudanca(converterMudancaDTO(mudanca));
+            }
         }
         for (MudancaDTO mudanca : paraExcluir) {
-            mudancaDAO.salvarMudanca(converterMudancaDTO(mudanca));
+            if (mudanca.motivo() != MotivoMudanca.NULO) {
+                mudancaDAO.salvarMudanca(converterMudancaDTO(mudanca));
+            }
         }
     }
 

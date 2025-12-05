@@ -13,29 +13,31 @@ import dev.itaprev.model.Consignado;
 
 public class MundacaDAOImpl implements MudancaDAO {
 
-    private static final String INSERT_MUDANCA = "INSERT INTO mudancas (tipo, consignado_idconsignado) VALUES (?, ?)";
+    private static final String INSERT_MUDANCA = "INSERT INTO mudanca (tipo, consignado_idconsignado) VALUES (?, ?)";
     private static final String SELECT_ALL_BY_COMPETENCIA = "SELECT m.idmudanca, m.tipo, c.idconsignado, c.contrato, c.valor, c.competencia_idcompetencia "
-            + "FROM mudancas m "
+            + "FROM mudanca m "
             + "JOIN consignado c ON m.consignado_idconsignado = c.idconsignado "
             + "WHERE c.competencia_idcompetencia = ?";
     private static final String SELECT_BY_CONSIGNADO_ID = "SELECT m.idmudanca, m.tipo, c.idconsignado, c.contrato, c.valor, c.competencia_idcompetencia "
-            + "FROM mudancas m "
+            + "FROM mudanca m "
             + "JOIN consignado c ON m.consignado_idconsignado = c.idconsignado "
             + "WHERE c.idconsignado = ?";
     private static final String SELECT_ALL_BY_MOTIVO = "SELECT m.idmudanca, m.tipo, c.idconsignado, c.contrato, c.valor, c.competencia_idcompetencia "
-            + "FROM mudancas m "
+            + "FROM mudanca m "
             + "JOIN consignado c ON m.consignado_idconsignado = c.idconsignado "
             + "WHERE m.tipo = ? AND c.competencia_idcompetencia = ?";
 
     @Override
     public void salvarMudanca(Mudanca mudanca) {
+        ConsignadoController consignadoController = new ConsignadoController();
+        int idConsignado = consignadoController.buscarIdConsignado(mudanca.getConsignado().getContrato(), mudanca.getConsignado().getIdCompetencia());
+        if (idConsignado == 0) {
+            throw new RuntimeException("Consignado não encontrado para salvar mudança.");
+        }
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(INSERT_MUDANCA)) {
-            
-            ConsignadoController consignadoController = new ConsignadoController();
-            int idconsignado = consignadoController.buscarIdConsignado(mudanca.getConsignado().getContrato(), mudanca.getConsignado().getIdCompetencia());
             stmt.setString(1, mudanca.getMotivo().name());
-            stmt.setInt(2, idconsignado);
+            stmt.setInt(2, idConsignado);
             stmt.executeUpdate();
 
         } catch (Exception e) {

@@ -16,6 +16,7 @@ import javafx.collections.transformation.FilteredList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
@@ -51,6 +52,7 @@ public class ComparacaoView extends VBox {
     private Tab tabExcluidos;
 
     private final ResultadoComparacaoDTO resultadoOriginal;
+    private final int idCompetencia;
 
     private List<MudancaDTO> ultimoLoteAcatado;
     
@@ -62,6 +64,7 @@ public class ComparacaoView extends VBox {
 
     public ComparacaoView(ResultadoComparacaoDTO resultado, int mes, int ano) {
         this.resultadoOriginal = resultado;
+        this.idCompetencia = resultado.idCompetencia();
 
         this.setPadding(new Insets(10));
         this.setSpacing(10);
@@ -71,14 +74,14 @@ public class ComparacaoView extends VBox {
         title.setFont(new Font("Arial", 24));
 
         List<ConsignadoDTO> divergentesDTO = resultadoOriginal.divergentes().stream()
-            .map(c -> new ConsignadoDTO(c.getContrato(), c.getNome(), c.getCpf(), c.getMatricula(), c.getPrazoTotal(), c.getNumeroPrestacao(), c.getValorPrestacao(), 0)) // IdCompetencia 0 ou mockado
+            .map(c -> new ConsignadoDTO(c.getContrato(), c.getNome(), c.getCpf(), c.getMatricula(), c.getPrazoTotal(), c.getNumeroPrestacao(), c.getValorPrestacao(), this.idCompetencia))
             .collect(Collectors.toList());
 
         this.listaAnalise = FXCollections.observableArrayList(divergentesDTO);
 
         List<MudancaDTO> acatadosDTO = resultadoOriginal.acatados().stream()
             .map(c -> {
-                ConsignadoDTO dto = new ConsignadoDTO(c.getContrato(), c.getNome(), c.getCpf(), c.getMatricula(), c.getPrazoTotal(), c.getNumeroPrestacao(), c.getValorPrestacao(), 0);
+                ConsignadoDTO dto = new ConsignadoDTO(c.getContrato(), c.getNome(), c.getCpf(), c.getMatricula(), c.getPrazoTotal(), c.getNumeroPrestacao(), c.getValorPrestacao(), this.idCompetencia);
                 return new MudancaDTO(dto, MotivoMudanca.NULO);
             })
             .collect(Collectors.toList());
@@ -86,7 +89,7 @@ public class ComparacaoView extends VBox {
 
         List<MudancaDTO> excluidosDTO = resultadoOriginal.paraExcluir().stream()
             .map(c -> {
-                ConsignadoDTO dto = new ConsignadoDTO(c.getContrato(), c.getNome(), c.getCpf(), c.getMatricula(), c.getPrazoTotal(), c.getNumeroPrestacao(), c.getValorPrestacao(), 0);
+                ConsignadoDTO dto = new ConsignadoDTO(c.getContrato(), c.getNome(), c.getCpf(), c.getMatricula(), c.getPrazoTotal(), c.getNumeroPrestacao(), c.getValorPrestacao(), this.idCompetencia-1);
                 return new MudancaDTO(dto,  MotivoMudanca.NULO);
             })
             .collect(Collectors.toList());
@@ -164,7 +167,7 @@ public class ComparacaoView extends VBox {
         this.txtBuscaAcatados.textProperty().addListener((obs, oldVal, newVal) -> {
             this.filteredAcatados.setPredicate(mudanca -> filtroMudanca(mudanca, newVal));
         });
-        this.tabelaAcatados = criarTabelaMudancas(this.filteredAcatados);
+        this.tabelaAcatados = criarTabelaMudancas(this.filteredAcatados, this.listaAcatados);
 
         this.btnDesfazer = new Button("⬅ Desfazer Última Ação");
         this.btnDesfazer.setOnAction(e -> desfazerUltimaAcao());
@@ -193,7 +196,7 @@ public class ComparacaoView extends VBox {
             this.filteredExcluidos.setPredicate(mudanca -> filtroMudanca(mudanca, newVal));
         });
 
-        this.tabelaExcluidos = criarTabelaMudancas(this.filteredExcluidos);
+        this.tabelaExcluidos = criarTabelaMudancas(this.filteredExcluidos, this.listaExcluidos);
         painel.getChildren().addAll(lblTitulo, txtBuscaExcluidos, this.tabelaExcluidos);
         return painel;
     }
@@ -276,7 +279,7 @@ public class ComparacaoView extends VBox {
         this.txtBuscaExcluidos.clear();
 
         List<ConsignadoDTO> divergentesDTO = resultadoOriginal.divergentes().stream()
-             .map(c -> new ConsignadoDTO(c.getContrato(), c.getNome(), c.getCpf(), c.getMatricula(), c.getPrazoTotal(), c.getNumeroPrestacao(), c.getValorPrestacao(), 0))
+             .map(c -> new ConsignadoDTO(c.getContrato(), c.getNome(), c.getCpf(), c.getMatricula(), c.getPrazoTotal(), c.getNumeroPrestacao(), c.getValorPrestacao(), this.idCompetencia))
              .collect(Collectors.toList());
 
         this.listaAnalise.setAll(divergentesDTO);
@@ -284,14 +287,14 @@ public class ComparacaoView extends VBox {
         this.listaAcatados.setAll(
             resultadoOriginal.acatados().stream()
                 .map(c -> new MudancaDTO(
-                    new ConsignadoDTO(c.getContrato(), c.getNome(), c.getCpf(), c.getMatricula(), c.getPrazoTotal(), c.getNumeroPrestacao(), c.getValorPrestacao(), 0), 
+                    new ConsignadoDTO(c.getContrato(), c.getNome(), c.getCpf(), c.getMatricula(), c.getPrazoTotal(), c.getNumeroPrestacao(), c.getValorPrestacao(), this.idCompetencia), 
                      MotivoMudanca.NULO))
                 .collect(Collectors.toList())
         );
         this.listaExcluidos.setAll(
              resultadoOriginal.paraExcluir().stream()
                 .map(c -> new MudancaDTO(
-                    new ConsignadoDTO(c.getContrato(), c.getNome(), c.getCpf(), c.getMatricula(), c.getPrazoTotal(), c.getNumeroPrestacao(), c.getValorPrestacao(), 0), MotivoMudanca.NULO))
+                    new ConsignadoDTO(c.getContrato(), c.getNome(), c.getCpf(), c.getMatricula(), c.getPrazoTotal(), c.getNumeroPrestacao(), c.getValorPrestacao(), this.idCompetencia-1), MotivoMudanca.NULO))
                 .collect(Collectors.toList())
         );
 
@@ -342,10 +345,12 @@ public class ComparacaoView extends VBox {
             detalhes.append("Nenhum.\n");
         } else {
             for (MudancaDTO m : paraAcatar) {
-                detalhes.append(String.format("Contrato: %s | Nome: %s | Motivo: %s\n",
-                    m.consignado().contrato(),
-                    m.consignado().nome(),
-                    m.motivo()));
+                if (m.motivo() != MotivoMudanca.NULO) {
+                    detalhes.append(String.format("Contrato: %s | Nome: %s | Motivo: %s\n",
+                        m.consignado().contrato(),
+                        m.consignado().nome(),
+                        m.motivo()));
+                }
             }
         }
 
@@ -453,33 +458,56 @@ public class ComparacaoView extends VBox {
     }
 
     @SuppressWarnings("unchecked")
-    private TableView<MudancaDTO> criarTabelaMudancas(ObservableList<MudancaDTO> lista) {
+    private TableView<MudancaDTO> criarTabelaMudancas(ObservableList<MudancaDTO> lista, ObservableList<MudancaDTO> listaFonte) {
         TableView<MudancaDTO> tabela = new TableView<>();
+
+        tabela.setEditable(true);
+
         tabela.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         TableColumn<MudancaDTO, String> colContrato = new TableColumn<>("Contrato");
         colContrato.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().consignado().contrato()));
+        colContrato.setEditable(false);
         
         TableColumn<MudancaDTO, String> colNome = new TableColumn<>("Nome");
         colNome.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().consignado().nome()));
+        colNome.setEditable(false);
         
         TableColumn<MudancaDTO, String> colCpf = new TableColumn<>("CPF");
         colCpf.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().consignado().cpf()));
+        colCpf.setEditable(false);
         
         TableColumn<MudancaDTO, String> colMatricula = new TableColumn<>("Matrícula");
         colMatricula.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().consignado().matricula()));
+        colMatricula.setEditable(false);
         
         TableColumn<MudancaDTO, Integer> colPrazo = new TableColumn<>("Prazo Total");
         colPrazo.setCellValueFactory(cell -> new SimpleIntegerProperty(cell.getValue().consignado().prazoTotal()).asObject());
+        colPrazo.setEditable(false);
         
         TableColumn<MudancaDTO, Integer> colPrestacao = new TableColumn<>("Nº Prestação");
         colPrestacao.setCellValueFactory(cell -> new SimpleIntegerProperty(cell.getValue().consignado().numeroPrestacao()).asObject());
+        colPrestacao.setEditable(false);
         
         TableColumn<MudancaDTO, Double> colValor = new TableColumn<>("Valor Prestação");
         colValor.setCellValueFactory(cell -> new SimpleDoubleProperty(cell.getValue().consignado().valorPrestacao()).asObject());
+        colValor.setEditable(false);
 
         TableColumn<MudancaDTO, MotivoMudanca> colMotivo = new TableColumn<>("Motivo");
+    
         colMotivo.setCellValueFactory(cell -> new SimpleObjectProperty<>(cell.getValue().motivo()));
+        colMotivo.setCellFactory(ComboBoxTableCell.forTableColumn(MotivoMudanca.values()));
+        colMotivo.setOnEditCommit(event -> {
+            MudancaDTO itemAntigo = event.getRowValue();
+            MotivoMudanca novoMotivo = event.getNewValue();
+
+            MudancaDTO itemNovo = new MudancaDTO(itemAntigo.consignado(), novoMotivo);
+
+            int index = listaFonte.indexOf(itemAntigo);
+            if (index >= 0) {
+                listaFonte.set(index, itemNovo);
+            }
+        });
 
         tabela.getColumns().addAll(colContrato, colNome, colCpf, colMatricula, colPrazo, colPrestacao, colValor, colMotivo);
 
