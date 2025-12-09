@@ -23,7 +23,7 @@ public class LeitorExcel {
 
         if (arquivoSelecionado == null) {
             System.out.println("Nenhum arquivo foi selecionado. A operação foi cancelada.");
-            return listaDeConsignados; 
+            throw new RuntimeException("Operação de leitura de Excel cancelada pelo usuário.");
         }
         
         String caminhoDoArquivo = arquivoSelecionado.getAbsolutePath();

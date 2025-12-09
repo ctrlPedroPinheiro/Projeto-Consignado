@@ -14,6 +14,8 @@ import dev.itaprev.view.HomeView;
 import dev.itaprev.view.ImportarView;
 import dev.itaprev.view.ConsultaView;
 import dev.itaprev.view.SobreView;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 
 @SuppressWarnings("unused")
 public class MenuView extends Application {
@@ -56,7 +58,12 @@ public class MenuView extends Application {
         
         navegarPara(new HomeView()); 
 
-        Scene scene = new Scene(borderPane, 800, 600);
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        Dimension screenSize = toolkit.getScreenSize();
+        double screenWidth = screenSize.getWidth();
+        double screenHeight = screenSize.getHeight();
+
+        Scene scene = new Scene(borderPane, screenWidth*0.8, screenHeight*0.7);
         primaryStage.setScene(scene);
         primaryStage.show();
     }

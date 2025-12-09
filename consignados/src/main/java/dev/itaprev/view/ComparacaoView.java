@@ -22,6 +22,8 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -452,7 +454,10 @@ public class ComparacaoView extends VBox {
         tabela.setItems(lista);
         tabela.setPlaceholder(new Label("Nenhum item encontrado."));
         tabela.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
-        tabela.setPrefHeight(400);
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        Dimension screenSize = toolkit.getScreenSize();
+        double screenHeight = screenSize.getHeight();
+        tabela.setPrefHeight(screenHeight*0.55);
 
         return tabela;
     }
@@ -514,7 +519,10 @@ public class ComparacaoView extends VBox {
         tabela.setItems(lista);
         tabela.setPlaceholder(new Label("Nenhum item encontrado."));
         tabela.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
-        tabela.setPrefHeight(400);
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        Dimension screenSize = toolkit.getScreenSize();
+        double screenHeight = screenSize.getHeight();
+        tabela.setPrefHeight(screenHeight*0.55);
 
         return tabela;
     }
