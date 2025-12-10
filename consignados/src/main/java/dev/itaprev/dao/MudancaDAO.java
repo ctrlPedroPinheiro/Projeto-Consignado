@@ -1,13 +1,15 @@
 package dev.itaprev.dao;
 
 import java.util.List;
+
+import dev.itaprev.dto.MudancaDTO;
 import dev.itaprev.model.Mudanca;
 
 public interface MudancaDAO {
     
     void salvarMudanca(Mudanca mudanca);
 
-    List<Mudanca> buscarTodos(int idcompetencia);
+    List<MudancaDTO> buscarTodos(int idcompetencia);
 
     Mudanca buscarPorConsignado(int idconsignado);
 

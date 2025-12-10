@@ -23,14 +23,14 @@ public class ConsignadoController {
 
         ConsignadoDAOImpl dao = new ConsignadoDAOImpl();
 
-        Map<String, Consignado> mapImportados = new HashMap<>();
-        for (Consignado c : importarConsignados(idCompetencia)) {
-            mapImportados.put(c.getContrato(), c);
-        }
-
         Map<String, Consignado> mapBanco = new HashMap<>();
         for (Consignado c : dao.buscarTodos(idCompetencia-1)) {
             mapBanco.put(c.getContrato(), c);
+        }
+
+        Map<String, Consignado> mapImportados = new HashMap<>();
+        for (Consignado c : importarConsignados(idCompetencia)) {
+            mapImportados.put(c.getContrato(), c);
         }
         
         System.out.println("Dados do Banco: " + mapBanco.size() + " registros.");

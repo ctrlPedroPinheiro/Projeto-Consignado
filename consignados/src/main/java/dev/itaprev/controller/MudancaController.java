@@ -3,7 +3,7 @@ package dev.itaprev.controller;
 import java.util.List;
 
 import dev.itaprev.dao.MudancaDAO;
-import dev.itaprev.dao.MundacaDAOImpl;
+import dev.itaprev.dao.MudancaDAOImpl;
 import dev.itaprev.dto.MudancaDTO;
 import dev.itaprev.model.MotivoMudanca;
 import dev.itaprev.model.Mudanca;
@@ -13,7 +13,7 @@ public class MudancaController {
     private ConsignadoController consignadoController;
 
     public MudancaController() {
-        this.mudancaDAO = new MundacaDAOImpl();
+        this.mudancaDAO = new MudancaDAOImpl();
         this.consignadoController = new ConsignadoController();
     }
 
@@ -36,5 +36,9 @@ public class MudancaController {
         mudanca.setMotivo(mudancaDTO.motivo());
         mudanca.setConsignado(consignadoController.converterParaModel(mudancaDTO.consignado()));
         return mudanca;
+    }
+
+    public List<MudancaDTO> listarMudancasPorCompetencia(int idcompetencia) {
+        return mudancaDAO.buscarTodos(idcompetencia);
     }
 }

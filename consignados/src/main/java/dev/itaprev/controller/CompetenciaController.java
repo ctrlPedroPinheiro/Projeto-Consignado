@@ -1,5 +1,7 @@
 package dev.itaprev.controller;
 
+import java.util.List;
+
 import dev.itaprev.dao.CompetenciaDAOImpl;
 import dev.itaprev.dto.CompetenciaDTO;
 
@@ -32,5 +34,10 @@ public class CompetenciaController {
     public CompetenciaDTO buscarUltimaCompetencia() {
         CompetenciaDAOImpl dao = new CompetenciaDAOImpl();
         return dao.buscarUltimaCompetencia();
+    }
+
+    public List<CompetenciaDTO> listarCompetencias() {
+        CompetenciaDAOImpl dao = new CompetenciaDAOImpl();
+        return dao.buscarTodos();
     }
 }

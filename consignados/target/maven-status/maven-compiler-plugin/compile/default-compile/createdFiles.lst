@@ -1,6 +1,7 @@
 dev\itaprev\controller\CompetenciaController.class
 dev\itaprev\dao\ConsignadoDAO.class
 dev\itaprev\dto\CompetenciaDTO.class
+dev\itaprev\view\ConsultaView$2.class
 dev\itaprev\dao\CompetenciaDAO.class
 dev\itaprev\view\ImportarView.class
 dev\itaprev\dto\ConsignadoDTO.class
@@ -9,13 +10,14 @@ dev\itaprev\dto\ResultadoComparacaoDTO.class
 dev\itaprev\model\MotivoMudanca.class
 dev\itaprev\view\MenuView.class
 dev\itaprev\view\SobreView.class
+dev\itaprev\dao\MudancaDAOImpl.class
 dev\itaprev\view\ConsultaView.class
 dev\itaprev\view\HomeView.class
 dev\itaprev\tools\LeitorExcel.class
 dev\itaprev\view\ComparacaoView.class
 dev\itaprev\controller\ConsignadoController.class
 dev\itaprev\dto\MudancaDTO.class
-dev\itaprev\dao\MundacaDAOImpl.class
+dev\itaprev\view\ConsultaView$1.class
 dev\itaprev\model\Consignado.class
 dev\itaprev\dao\ConsignadoDAOImpl.class
 dev\itaprev\dao\MudancaDAO.class

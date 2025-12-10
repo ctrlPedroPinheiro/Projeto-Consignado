@@ -72,4 +72,9 @@ public class Consignado {
                 ", idCompetencia=" + idCompetencia +
                 '}';
     }
+
+    public void setIdConsignado(int int1) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setIdConsignado'");
+    }
 }
