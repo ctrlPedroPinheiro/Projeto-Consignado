@@ -11,6 +11,7 @@ dev\itaprev\model\MotivoMudanca.class
 dev\itaprev\view\MenuView.class
 dev\itaprev\view\SobreView.class
 dev\itaprev\dao\MudancaDAOImpl.class
+dev\itaprev\tools\LeitorExcel$1.class
 dev\itaprev\view\ConsultaView.class
 dev\itaprev\view\HomeView.class
 dev\itaprev\tools\LeitorExcel.class

@@ -7,6 +7,9 @@ import dev.itaprev.dto.MudancaDTO;
 import dev.itaprev.dto.ResultadoComparacaoDTO;
 import dev.itaprev.model.Consignado;
 import dev.itaprev.tools.LeitorExcel;
+import javafx.stage.FileChooser;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -74,24 +77,36 @@ public class ConsignadoController {
     }
 
     public ArrayList<Consignado> importarConsignados(int idCompetencia) {
-        ArrayList<ConsignadoDTO> consignadosDTO = LeitorExcel.lerExcel(idCompetencia);
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Selecione o arquivo Excel");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Arquivos Excel", "*.xlsx", "*.xls"));
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+        File arquivoSelecionado = fileChooser.showOpenDialog(null);
+        if (arquivoSelecionado != null) {
+            System.out.println("Arquivo selecionado: " + arquivoSelecionado.getAbsolutePath());
+            
+            LeitorExcel leitor = new LeitorExcel();
+            List<ConsignadoDTO> dados = leitor.lerArquivo(arquivoSelecionado, idCompetencia);
+            
+            ArrayList<Consignado> consignados = new ArrayList<>();
+            for (ConsignadoDTO dto : dados) {
+                consignados.add(new Consignado(
+                    dto.contrato(),
+                    dto.nome(),
+                    dto.cpf(),
+                    dto.matricula(),
+                    dto.prazoTotal(),
+                    dto.numeroPrestacao(),
+                    dto.valorPrestacao(),
+                    dto.idCompetencia()
+                ));
+            }
+            System.out.println("Total de consignados importados: " + consignados.size());
 
-        ArrayList<Consignado> consignados = new ArrayList<>();
-        for (ConsignadoDTO dto : consignadosDTO) {
-            consignados.add(new Consignado(
-                dto.contrato(),
-                dto.nome(),
-                dto.cpf(),
-                dto.matricula(),
-                dto.prazoTotal(),
-                dto.numeroPrestacao(),
-                dto.valorPrestacao(),
-                dto.idCompetencia()
-            ));
+            return consignados;
+        } else {
+            throw new RuntimeException("Nenhum arquivo selecionado.");
         }
-        System.out.println("Total de consignados importados: " + consignados.size());
-
-        return consignados;
     }
 
     private boolean dadosSaoDivergentes(Consignado importado, Consignado doBanco) {
