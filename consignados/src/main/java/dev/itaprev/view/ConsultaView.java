@@ -40,6 +40,7 @@ public class ConsultaView extends VBox {
     private CompetenciaDTO competenciaSelecionada;
     private ComboBox<String> cmbCompetencia;
     private Button btnPesquisar;
+    private Button btnGerarRelatorio;
 
     private final ConsignadoController consignadoController;
     private final MudancaController mudancaController;
@@ -77,7 +78,9 @@ public class ConsultaView extends VBox {
         tabPane.getTabs().addAll(tabConsignados, tabMudancas);
         VBox.setVgrow(tabPane, Priority.ALWAYS);
 
-        this.getChildren().addAll(title, boxSelecao, tabPane);
+        HBox boxRodape = criarRodape();
+
+        this.getChildren().addAll(title, boxSelecao, tabPane, boxRodape);
     }
 
     private HBox criarAreaSelecaoCompetencia() {
@@ -107,6 +110,18 @@ public class ConsultaView extends VBox {
         HBox box = new HBox(10, lblComp, cmbCompetencia, btnPesquisar);
         box.setAlignment(Pos.CENTER_LEFT);
         box.setPadding(new Insets(10, 0, 10, 0));
+        return box;
+    }
+
+    private HBox criarRodape() {
+        this.btnGerarRelatorio = new Button("Gerar Relatório PDF");
+        this.btnGerarRelatorio.setStyle("-fx-base: #2e7d32; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px;");
+        this.btnGerarRelatorio.setPrefHeight(40);
+        this.btnGerarRelatorio.setOnAction(e -> acaoGerarRelatorio());
+
+        HBox box = new HBox(this.btnGerarRelatorio);
+        box.setAlignment(Pos.CENTER_RIGHT);
+        box.setPadding(new Insets(10, 0, 0, 0));
         return box;
     }
 
@@ -216,6 +231,24 @@ public class ConsultaView extends VBox {
         }
     }
 
+    private void acaoGerarRelatorio() {
+        if (this.competenciaSelecionada == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Por favor, selecione e carregue uma competência primeiro.");
+            alert.show();
+            return;
+        }
+
+        try {
+            consignadoController.relatorioConsultaPDF(competenciaSelecionada);
+            Alert success = new Alert(Alert.AlertType.INFORMATION, "Relatório gerado com sucesso!");
+            success.show();
+        } catch (Exception e) {
+            Alert error = new Alert(Alert.AlertType.ERROR, "Erro ao gerar relatório: " + e.getMessage());
+            error.show();
+            e.printStackTrace();
+        }
+    }
+
     private boolean filtroConsignado(ConsignadoDTO c, String texto) {
         if (texto == null || texto.isBlank()) return true;
         String lower = texto.toLowerCase().trim();
@@ -322,6 +355,6 @@ public class ConsultaView extends VBox {
     private void configurarAlturaTabela(TableView<?> tabela) {
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Dimension screenSize = toolkit.getScreenSize();
-        tabela.setPrefHeight(screenSize.getHeight() * 0.60);
+        tabela.setPrefHeight(screenSize.getHeight() * 0.55);
     }
 }

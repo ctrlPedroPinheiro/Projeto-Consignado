@@ -6,7 +6,8 @@ import dev.itaprev.dto.ConsignadoDTO;
 import dev.itaprev.dto.MudancaDTO;
 import dev.itaprev.dto.ResultadoComparacaoDTO;
 import dev.itaprev.model.Consignado;
-import dev.itaprev.tools.LeitorExcel;
+import dev.itaprev.util.GeradorPDF;
+import dev.itaprev.util.LeitorExcel;
 import javafx.stage.FileChooser;
 
 import java.io.File;
@@ -193,6 +194,13 @@ public class ConsignadoController {
         ConsignadoDAOImpl dao = new ConsignadoDAOImpl();
         Consignado consignado = dao.buscarPorIdconsignado(idconsignado);
         return converterParaDTO(consignado);
+    }
+
+    public void relatorioConsultaPDF(CompetenciaDTO competencia) {
+        ArrayList<ConsignadoDTO> consignados = listarConsignados(competencia.idcompetencia());
+        MudancaController mudancaController = new MudancaController();
+        ArrayList<MudancaDTO> mudancas = new ArrayList<>(mudancaController.listarMudancasPorCompetencia(competencia.idcompetencia()));    
+        GeradorPDF.gerarRelatorioConsulta(consignados, mudancas);
     }
 
     public ConsignadoDTO converterParaDTO(Consignado consignado) {
