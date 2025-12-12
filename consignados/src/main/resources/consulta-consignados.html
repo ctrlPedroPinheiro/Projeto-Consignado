@@ -3,25 +3,32 @@
 <head>
     <meta charset="UTF-8"/>
     <style>
-        body { font-family: sans-serif; font-size: 12px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        th { background-color: #005f73; color: white; padding: 8px; text-align: left; }
-        td { border: 1px solid #ddd; padding: 6px; }
+        @page {
+            size: A4;
+            margin-top: 20mm;
+            margin-bottom: 20mm;
+            margin-left: 5mm;
+            margin-right: 5mm;
+        }
+        body { font-family: sans-serif; font-size: 10px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 5px; }
+        th { background-color: #005f73; color: white; padding: 4px; text-align: left; }
+        td { border: 1px solid #ddd; padding: 3px; }
         
         .text-right { text-align: right; }
         .text-center { text-align: center; }
         
         tr:nth-child(even) { background-color: #f2f2f2; }
-        .cabecalho { text-align: center; margin-bottom: 20px; }
+        .cabecalho { text-align: center; margin-bottom: 10px; }
         .data { color: #666; font-size: 10px; text-align: right;}
         
-        .resumo { margin-top: 20px; border-top: 2px solid #005f73; padding-top: 10px; }
+        .resumo { margin-top: 10px; border-top: 2px solid #005f73; padding-top: 10px; }
     </style>
 </head>
 <body>
 
     <div class="cabecalho">
-        <h1>RELATÓRIO CONSIGNADO CAIXA ECONÔMICA FEDERAL</h1>
+        <h2>RELATÓRIO CONSIGNADO CAIXA ECONÔMICA FEDERAL</h2>
         <p class="data" th:text="'Gerado em: ' + ${dataGeracao}"></p>
     </div>
 
