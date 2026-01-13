@@ -342,7 +342,7 @@ public class ComparacaoView extends VBox {
 
         StringBuilder detalhes = new StringBuilder();
 
-        detalhes.append("--- ACATADOS (PARA SALVAR) ---\n");
+        detalhes.append("ACATADOS\n");
         if (paraAcatar.isEmpty()) {
             detalhes.append("Nenhum.\n");
         } else {
@@ -356,7 +356,7 @@ public class ComparacaoView extends VBox {
             }
         }
 
-        detalhes.append("\n--- EXCLUÍDOS ---\n");
+        detalhes.append("\nEXCLUÍDOS\n");
         if (paraExcluir.isEmpty()) {
             detalhes.append("Nenhum.\n");
         } else {
@@ -386,8 +386,6 @@ public class ComparacaoView extends VBox {
                 MudancaController mudancaController = new MudancaController();
                 controller.salvarMudancasDTO(paraAcatar);
                 mudancaController.salvarMudancasDTO(paraAcatar, paraExcluir);
-                
-                System.out.println("SIMULAÇÃO: controller.salvarMudancasDTO() chamado.");
 
                 Alert alertSucesso = new Alert(Alert.AlertType.INFORMATION);
                 alertSucesso.setTitle("Sucesso");
@@ -395,7 +393,8 @@ public class ComparacaoView extends VBox {
                 alertSucesso.setContentText("O banco de dados foi atualizado.");
                 alertSucesso.showAndWait();
 
-                travarBotoesAposSalvar();
+                // travarBotoesAposSalvar();
+                MenuView.navegarPara(new HomeView());
 
             } catch (Exception ex) {
                 System.err.println("Erro ao tentar salvar: " + ex.getMessage());
@@ -405,10 +404,12 @@ public class ComparacaoView extends VBox {
                 alertErro.setHeaderText("Não foi possível salvar as alterações.");
                 alertErro.setContentText("Ocorreu um erro: " + ex.getMessage());
                 alertErro.showAndWait();
+                MenuView.navegarPara(new HomeView());
             }
         }
     }
 
+    /*
     private void travarBotoesAposSalvar() {
         this.btnSalvar.setDisable(true);
         this.btnSalvar.setText("Alterações Salvas");
@@ -423,7 +424,7 @@ public class ComparacaoView extends VBox {
         this.tabelaAcatados.setDisable(true);
         this.tabelaExcluidos.setDisable(true);
     }
-
+    */
     @SuppressWarnings("unchecked")
     private TableView<ConsignadoDTO> criarTabelaConsignados(ObservableList<ConsignadoDTO> lista) {
         TableView<ConsignadoDTO> tabela = new TableView<>();
