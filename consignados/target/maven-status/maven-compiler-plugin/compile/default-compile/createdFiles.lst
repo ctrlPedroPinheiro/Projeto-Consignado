@@ -7,7 +7,6 @@ dev\itaprev\view\ImportarView.class
 dev\itaprev\dto\ConsignadoDTO.class
 dev\itaprev\dao\CompetenciaDAOImpl.class
 dev\itaprev\dto\ResultadoComparacaoDTO.class
-dev\itaprev\util\GeradorPDF.class
 dev\itaprev\model\MotivoMudanca.class
 dev\itaprev\util\LeitorExcel$1.class
 dev\itaprev\view\MenuView.class
@@ -19,6 +18,7 @@ dev\itaprev\view\ComparacaoView.class
 dev\itaprev\controller\ConsignadoController.class
 dev\itaprev\dto\MudancaDTO.class
 dev\itaprev\view\ConsultaView$1.class
+dev\itaprev\util\Exportador.class
 dev\itaprev\model\Consignado.class
 dev\itaprev\dao\ConsignadoDAOImpl.class
 dev\itaprev\dao\MudancaDAO.class

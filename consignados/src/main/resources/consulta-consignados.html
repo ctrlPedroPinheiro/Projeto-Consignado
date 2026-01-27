@@ -5,8 +5,8 @@
     <style>
         @page {
             size: A4;
-            margin-top: 20mm;
-            margin-bottom: 20mm;
+            margin-top: 10mm;
+            margin-bottom: 10mm;
             margin-left: 5mm;
             margin-right: 5mm;
         }
@@ -19,10 +19,12 @@
         .text-center { text-align: center; }
         
         tr:nth-child(even) { background-color: #f2f2f2; }
-        .cabecalho { text-align: center; margin-bottom: 10px; }
+        .cabecalho { text-align: center; margin-bottom: 5px; }
         .data { color: #666; font-size: 10px; text-align: right;}
         
         .resumo { margin-top: 10px; border-top: 2px solid #005f73; padding-top: 10px; }
+
+        .nova-pagina { page-break-before: always; }
     </style>
 </head>
 <body>
@@ -66,6 +68,40 @@
             Total: R$ 0,00
         </h3>
         <h4 style="text-align: right;" th:text="'Quantidade de Registros: ' + ${quantidadeRegistros}">
+            Quantidade de Registros: 0
+        </h4>
+    </div>
+
+    <div class="nova-pagina"></div>
+
+    <div class="cabecalho">
+        <h2>RELATÓRIO DE MUDANÇAS DE CONSIGNADOS CAIXA ECONÔMICA FEDERAL</h2>
+        <p class="data" th:text="'Gerado em: ' + ${dataGeracao}"></p>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>CONTRATO</th>
+                <th>NOME</th>
+                <th>CPF</th>
+                <th class="text-right">VALOR</th>
+                <th>MOTIVO</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="mudanca : ${listaMudancas}">
+                <td th:text="${mudanca.consignado.contrato}">00.0000.000</td>
+                <td th:text="${mudanca.consignado.nome}">Nome do Cliente</td>
+                <td th:text="${mudanca.consignado.cpf}">000.000.000-00</td>
+                <td class="text-right" th:text="'R$ ' + ${#numbers.formatDecimal(mudanca.consignado.valorPrestacao, 1, 'POINT', 2, 'COMMA')}">R$ 0,00</td>
+                <td th:text="${mudanca.motivo}">Motivo da Mudança</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="resumo">
+        <h4 style="text-align: right;" th:text="'Quantidade de Registros: ' + ${quantidadeMudancas}">
             Quantidade de Registros: 0
         </h4>
     </div>

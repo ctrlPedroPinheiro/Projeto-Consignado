@@ -6,7 +6,7 @@ import dev.itaprev.dto.ConsignadoDTO;
 import dev.itaprev.dto.MudancaDTO;
 import dev.itaprev.dto.ResultadoComparacaoDTO;
 import dev.itaprev.model.Consignado;
-import dev.itaprev.util.GeradorPDF;
+import dev.itaprev.util.Exportador;
 import dev.itaprev.util.LeitorExcel;
 import javafx.stage.FileChooser;
 
@@ -256,7 +256,18 @@ public class ConsignadoController {
         ArrayList<ConsignadoDTO> consignados = listarConsignados(competencia.idcompetencia());
         MudancaController mudancaController = new MudancaController();
         ArrayList<MudancaDTO> mudancas = new ArrayList<>(mudancaController.listarMudancasPorCompetencia(competencia.idcompetencia()));    
-        GeradorPDF.gerarRelatorioConsulta(consignados, mudancas);
+        Exportador.gerarRelatorioConsultaPDF(consignados, mudancas);
+    }
+
+    /**
+     * Gera um relatório em Excel para a consulta de consignados.
+     * @param competencia A competência para a qual o relatório será gerado.
+     */
+    public void relatorioConsultaExcel(CompetenciaDTO competencia) {
+        ArrayList<ConsignadoDTO> consignados = listarConsignados(competencia.idcompetencia());
+        MudancaController mudancaController = new MudancaController();
+        ArrayList<MudancaDTO> mudancas = new ArrayList<>(mudancaController.listarMudancasPorCompetencia(competencia.idcompetencia()));
+        Exportador.gerarRelatorioConsultaExcel(consignados, mudancas);
     }
 
     /**

@@ -43,7 +43,7 @@ public class ConsultaView extends VBox {
     private CompetenciaDTO competenciaSelecionada;
     private ComboBox<String> cmbCompetencia;
     private Button btnPesquisar;
-    private Button btnGerarRelatorio;
+    private ComboBox<String> cmbGerarRelatorio;
 
     private final ConsignadoController consignadoController;
     private final MudancaController mudancaController;
@@ -128,12 +128,14 @@ public class ConsultaView extends VBox {
      * @return A HBox contendo os elementos do rodapé.
      */
     private HBox criarRodape() {
-        this.btnGerarRelatorio = new Button("Gerar Relatório PDF");
-        this.btnGerarRelatorio.setStyle("-fx-base: #2e7d32; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px;");
-        this.btnGerarRelatorio.setPrefHeight(40);
-        this.btnGerarRelatorio.setOnAction(e -> acaoGerarRelatorio());
+        this.cmbGerarRelatorio = new ComboBox<>();
+        this.cmbGerarRelatorio.setPromptText("Gerar Relatório");
+        this.cmbGerarRelatorio.getItems().addAll(".pdf", ".xlsx");
+        this.cmbGerarRelatorio.setStyle("-fx-base: #2e7d32; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px;");
+        this.cmbGerarRelatorio.setPrefHeight(40);
+        this.cmbGerarRelatorio.setOnAction(e -> acaoGerarRelatorio());
 
-        HBox box = new HBox(this.btnGerarRelatorio);
+        HBox box = new HBox(this.cmbGerarRelatorio);
         box.setAlignment(Pos.CENTER_RIGHT);
         box.setPadding(new Insets(10, 0, 0, 0));
         return box;
@@ -264,16 +266,34 @@ public class ConsultaView extends VBox {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Por favor, selecione e carregue uma competência primeiro.");
             alert.show();
             return;
-        }
+        } 
 
-        try {
-            consignadoController.relatorioConsultaPDF(competenciaSelecionada);
-            Alert success = new Alert(Alert.AlertType.INFORMATION, "Relatório gerado com sucesso!");
-            success.show();
-        } catch (Exception e) {
-            Alert error = new Alert(Alert.AlertType.ERROR, "Erro ao gerar relatório: " + e.getMessage());
-            error.show();
-            e.printStackTrace();
+        String formatoRelatorio = this.cmbGerarRelatorio.getValue();
+        if (formatoRelatorio == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Por favor, selecione um formato de relatório.");
+            alert.show();
+            return;
+        } else if (formatoRelatorio.equals(".pdf")) {
+            try {
+                consignadoController.relatorioConsultaPDF(competenciaSelecionada);
+            } catch (Exception e) {
+                Alert error = new Alert(Alert.AlertType.ERROR, "Erro ao gerar relatório PDF: " + e.getMessage());
+                error.show();
+                e.printStackTrace();
+            }
+        } else if (formatoRelatorio.equals(".xlsx")) {
+            try {
+                consignadoController.relatorioConsultaExcel(competenciaSelecionada);
+                Alert success = new Alert(Alert.AlertType.INFORMATION, "Relatório Excel gerado com sucesso!");
+                success.show();
+            } catch (Exception e) {
+                Alert error = new Alert(Alert.AlertType.ERROR, "Erro ao gerar relatório Excel: " + e.getMessage());
+                error.show();
+                e.printStackTrace();
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Formato de relatório desconhecido.");
+            alert.show();
         }
     }
 
