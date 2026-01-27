@@ -1,5 +1,8 @@
 package dev.itaprev.model;
 
+/**
+ * Representa uma Mudança no consignado.
+ */
 public class Mudanca {
     private Consignado consignado;
     private MotivoMudanca motivo;

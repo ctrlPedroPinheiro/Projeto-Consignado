@@ -2,6 +2,9 @@ package dev.itaprev.model;
 
 import java.util.Objects;
 
+/**
+ * Representa um Consignado com informações detalhadas.
+ */
 public class Consignado {
     private String contrato;
     private String nome;

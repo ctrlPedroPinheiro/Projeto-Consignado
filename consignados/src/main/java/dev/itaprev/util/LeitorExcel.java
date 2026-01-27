@@ -9,8 +9,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe responsável pela leitura de arquivos Excel.
+ */
 public class LeitorExcel {
 
+    /**
+     * Lê um arquivo Excel e extrai os dados de consignados.
+     * @param arquivo
+     * @param idCompetencia
+     * @return
+     */
     public List<ConsignadoDTO> lerArquivo(File arquivo, int idCompetencia) {
 
         ArrayList<ConsignadoDTO> listaDeConsignados = new ArrayList<>();
@@ -61,6 +70,11 @@ public class LeitorExcel {
         return listaDeConsignados;
     }
 
+    /**
+     * Obtém o valor de uma célula como String.
+     * @param cell
+     * @return
+     */
     private String getCellValue(Cell cell) {
         if (cell == null) return "";
         switch (cell.getCellType()) {
@@ -70,6 +84,11 @@ public class LeitorExcel {
         }
     }
 
+    /**
+     * Obtém o valor de uma célula como número.
+     * @param cell
+     * @return
+     */
     private double getNumericValue(Cell cell) {
         if (cell == null) return 0.0;
         if (cell.getCellType() == CellType.NUMERIC) {

@@ -23,6 +23,9 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.List;
 
+/**
+ * Classe responsável pela visualização da consulta de consignados e mudanças.
+ */
 public class ConsultaView extends VBox {
 
     private ObservableList<ConsignadoDTO> listaConsignados;
@@ -46,6 +49,9 @@ public class ConsultaView extends VBox {
     private final MudancaController mudancaController;
     private final CompetenciaController competenciaController;
 
+    /**
+     * Construtor da classe ConsultaView.
+     */
     public ConsultaView() {
 
         this.consignadoController = new ConsignadoController();
@@ -83,6 +89,10 @@ public class ConsultaView extends VBox {
         this.getChildren().addAll(title, boxSelecao, tabPane, boxRodape);
     }
 
+    /**
+     * Cria a área de seleção de competência.
+     * @return A HBox contendo os elementos de seleção.
+     */
     private HBox criarAreaSelecaoCompetencia() {
         Label lblComp = new Label("Selecione a Competência:");
         lblComp.setStyle("-fx-font-weight: bold;");
@@ -113,6 +123,10 @@ public class ConsultaView extends VBox {
         return box;
     }
 
+    /**
+     * Cria o rodapé da tela.
+     * @return A HBox contendo os elementos do rodapé.
+     */
     private HBox criarRodape() {
         this.btnGerarRelatorio = new Button("Gerar Relatório PDF");
         this.btnGerarRelatorio.setStyle("-fx-base: #2e7d32; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px;");
@@ -125,6 +139,10 @@ public class ConsultaView extends VBox {
         return box;
     }
 
+    /**
+     * Cria o painel de consignados.
+     * @return O painel de consignados.
+     */
     private VBox criarPainelConsignados() {
         VBox painel = new VBox(10);
         painel.setPadding(new Insets(10));
@@ -152,6 +170,10 @@ public class ConsultaView extends VBox {
         return painel;
     }
 
+    /**
+     * Cria o painel de mudanças.
+     * @return O painel de mudanças.
+     */
     private VBox criarPainelMudancas() {
         VBox painel = new VBox(10);
         painel.setPadding(new Insets(10));
@@ -179,6 +201,9 @@ public class ConsultaView extends VBox {
         return painel;
     }
 
+    /**
+     * Carrega os dados das listas de consignados e mudanças.
+     */
     private void carregarDados() {
         String textoSelecionado = cmbCompetencia.getValue();
         if (textoSelecionado == null || textoSelecionado.isBlank()) {
@@ -231,6 +256,9 @@ public class ConsultaView extends VBox {
         }
     }
 
+    /**
+     * Ação para gerar o relatório.
+     */
     private void acaoGerarRelatorio() {
         if (this.competenciaSelecionada == null) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Por favor, selecione e carregue uma competência primeiro.");
@@ -249,6 +277,12 @@ public class ConsultaView extends VBox {
         }
     }
 
+    /**
+     * Filtra os consignados com base no texto de busca.
+     * @param c O consignado a ser filtrado.
+     * @param texto O texto de busca.
+     * @return true se o consignado corresponder ao filtro, false caso contrário.
+     */
     private boolean filtroConsignado(ConsignadoDTO c, String texto) {
         if (texto == null || texto.isBlank()) return true;
         String lower = texto.toLowerCase().trim();
@@ -257,6 +291,12 @@ public class ConsultaView extends VBox {
                (c.matricula() != null && c.matricula().toLowerCase().contains(lower));
     }
 
+    /**
+     * Filtra as mudanças com base no texto de busca.
+     * @param m A mudança a ser filtrada.
+     * @param texto O texto de busca.
+     * @return true se a mudança corresponder ao filtro, false caso contrário.
+     */
     private boolean filtroMudanca(MudancaDTO m, String texto) {
         if (texto == null || texto.isBlank()) return true;
         String lower = texto.toLowerCase().trim();
@@ -266,6 +306,11 @@ public class ConsultaView extends VBox {
         return matchNome || matchMotivo;
     }
     
+    /**
+     * Cria a tabela de consignados.
+     * @param lista
+     * @return
+     */
     @SuppressWarnings("unchecked")
     private TableView<ConsignadoDTO> criarTabelaConsignados(ObservableList<ConsignadoDTO> lista) {
         TableView<ConsignadoDTO> tabela = new TableView<>();
@@ -303,6 +348,11 @@ public class ConsultaView extends VBox {
         return tabela;
     }
 
+    /**
+     * Cria a tabela de mudanças.
+     * @param lista
+     * @return
+     */
     @SuppressWarnings("unchecked")
     private TableView<MudancaDTO> criarTabelaMudancas(ObservableList<MudancaDTO> lista) {
         TableView<MudancaDTO> tabela = new TableView<>();
@@ -352,6 +402,10 @@ public class ConsultaView extends VBox {
         return tabela;
     }
 
+    /**
+     * Configura a altura da tabela com base na altura da tela.
+     * @param tabela
+     */
     private void configurarAlturaTabela(TableView<?> tabela) {
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Dimension screenSize = toolkit.getScreenSize();

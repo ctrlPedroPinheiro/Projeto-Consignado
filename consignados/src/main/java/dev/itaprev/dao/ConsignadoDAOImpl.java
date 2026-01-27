@@ -11,7 +11,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Implementação da interface ConsignadoDAO.
+ */
 public class ConsignadoDAOImpl implements ConsignadoDAO {
+
+    /**
+     * Salva um novo consignado no banco de dados.
+     * @param consignado O objeto a ser salvo.
+     */
     @Override
     public void salvar(Consignado consignado) {
         String sql = "INSERT INTO consignado (contrato_numero, nome, cpf, matricula, prazo_total, numero_prestacao, valor_prestacao, competencia_idcompetencia) " +
@@ -36,6 +44,10 @@ public class ConsignadoDAOImpl implements ConsignadoDAO {
         }
     }
 
+    /**
+     * Atualiza um consignado existente no banco de dados.
+     * @param consignado O objeto com os dados atualizados.
+     */
     @Override
     public void atualizar(Consignado consignado) {
         String sql = "UPDATE consignado SET nome = ?, cpf = ?, matricula = ?, prazo_total = ?, " +
@@ -59,6 +71,11 @@ public class ConsignadoDAOImpl implements ConsignadoDAO {
         }
     }
 
+    /**
+     * Deleta um consignado do banco de dados pelo seu contrato.
+     * @param contrato O número do contrato a ser deletado.
+     * @param idcompetencia O ID da competência associada.
+     */
     @Override
     public void deletar(String contrato, int idcompetencia) {
         String sql = "DELETE FROM consignado WHERE contrato_numero = ? AND competencia_idcompetencia = ?";
@@ -75,6 +92,12 @@ public class ConsignadoDAOImpl implements ConsignadoDAO {
         }
     }
 
+    /**
+     * Busca um consignado pelo seu contrato e competência.
+     * @param contrato O número do contrato.
+     * @param idcompetencia O ID da competência.
+     * @return Um Optional contendo o Consignado se encontrado, ou vazio se não.
+     */
     @Override
     public Optional<Consignado> buscarPorContrato(String contrato, int idcompetencia) {
         String sql = "SELECT * FROM consignado WHERE contrato_numero = ? AND competencia_idcompetencia = ?";
@@ -98,6 +121,12 @@ public class ConsignadoDAOImpl implements ConsignadoDAO {
         return Optional.empty(); 
     }
 
+    /**
+     * Busca consignados pelo nome.
+     * @param nome O nome do consignado.
+     * @param idcompetencia O ID da competência associada.
+     * @return Uma lista com os consignados encontrados.
+     */
     public List<Consignado> buscarPorNome(String nome, int idcompetencia) {
         List<Consignado> consignados = new ArrayList<>();
         String sql = "SELECT * FROM consignado WHERE nome LIKE ? AND competencia_idcompetencia = ?";
@@ -121,6 +150,12 @@ public class ConsignadoDAOImpl implements ConsignadoDAO {
         return consignados;
     }
 
+    /**
+     * Busca consignados pelo CPF.
+     * @param cpf O CPF do consignado.
+     * @param idcompetencia O ID da competência associada.
+     * @return Uma lista com os consignados encontrados.
+     */
     public List<Consignado> buscarPorCpf(String cpf, int idcompetencia) {
         List<Consignado> consignados = new ArrayList<>();
         String sql = "SELECT * FROM consignado WHERE cpf = ? AND competencia_idcompetencia = ?";
@@ -144,6 +179,11 @@ public class ConsignadoDAOImpl implements ConsignadoDAO {
         return consignados;
     }
 
+    /**
+     * Busca todos os consignados cadastrados.
+     * @param idcompetencia O ID da competência associada.
+     * @return Uma lista com todos os consignados.
+     */
     @Override
     public List<Consignado> buscarTodos(int idcompetencia) {
         List<Consignado> consignados = new ArrayList<>();
@@ -167,6 +207,12 @@ public class ConsignadoDAOImpl implements ConsignadoDAO {
         return consignados;
     }
 
+    /**
+     * Busca o ID de um consignado pelo seu contrato e competência.
+     * @param contrato O número do contrato.
+     * @param idcompetencia O ID da competência.
+     * @return O ID do consignado, ou -1 se não encontrado.
+     */
     @Override
     public int buscarIdConsignado(String contrato, int idcompetencia) {
         String sql = "SELECT idconsignado FROM consignado WHERE contrato_numero = ? AND competencia_idcompetencia = ?";
@@ -190,6 +236,11 @@ public class ConsignadoDAOImpl implements ConsignadoDAO {
         return -1;
     }
 
+    /**
+     * Busca um consignado pelo seu ID.
+     * @param idconsignado O ID do consignado.
+     * @return O consignado encontrado, ou null se não encontrado.
+     */
     public Consignado buscarPorIdconsignado(int idconsignado) {
         String sql = "SELECT * FROM consignado WHERE idconsignado = ?";
         
@@ -211,6 +262,12 @@ public class ConsignadoDAOImpl implements ConsignadoDAO {
         return null; 
     }
 
+    /**
+     * Mapeia um ResultSet para um objeto Consignado.
+     * @param rs O ResultSet a ser mapeado.
+     * @return O objeto Consignado mapeado.
+     * @throws SQLException Se ocorrer um erro ao acessar os dados do ResultSet.
+     */
     private Consignado mapearResultadoParaConsignado(ResultSet rs) throws SQLException {
         return new Consignado(
             rs.getString("contrato_numero"),

@@ -17,8 +17,16 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+/**
+ * Classe responsável pela geração de relatórios em PDF.
+ */
 public class GeradorPDF {
 
+    /**
+     * Gera um relatório de consulta em PDF.
+     * @param listaConsignados
+     * @param listaMudancas
+     */
     public static final void gerarRelatorioConsulta(List<ConsignadoDTO> listaConsignados, List<MudancaDTO> listaMudancas) {
 
         double valorTotal = 0.0;

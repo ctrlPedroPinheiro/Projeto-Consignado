@@ -4,6 +4,9 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
+/**
+ * Classe responsável pela visualização da tela "Sobre".
+ */
 public class SobreView extends VBox {
 
     public SobreView() {

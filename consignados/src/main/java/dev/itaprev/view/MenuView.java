@@ -17,11 +17,17 @@ import dev.itaprev.view.SobreView;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
+/**
+ * Classe responsável pela visualização do menu principal.
+ */
 @SuppressWarnings("unused")
 public class MenuView extends Application {
 
     private static BorderPane borderPane;
 
+    /**
+     * Inicia a aplicação.
+     */
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Comparador de Consignados");
@@ -68,6 +74,10 @@ public class MenuView extends Application {
         primaryStage.show();
     }
 
+    /**
+     * Navega para uma nova tela.
+     * @param novaTela A nova tela a ser exibida.
+     */
     public static void navegarPara(Node novaTela) {
         if (borderPane != null) {
             borderPane.setCenter(novaTela);
@@ -76,6 +86,10 @@ public class MenuView extends Application {
         }
     }
 
+    /**
+     * Inicia a aplicação.
+     * @param args
+     */
     public static void main(String[] args) {
         launch(args);
     }

@@ -9,6 +9,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/**
+ * Implementação da interface CompetenciaDAO.
+ */
 public class CompetenciaDAOImpl implements CompetenciaDAO {
 
     private static final String INSERT_COMPETENCIA = "INSERT INTO competencia (idcompetencia, mes, ano) VALUES (?, ?, ?)";
@@ -16,6 +19,12 @@ public class CompetenciaDAOImpl implements CompetenciaDAO {
     private static final String SELECT_BY_MES_ANO = "SELECT idcompetencia, mes, ano FROM competencia WHERE mes = ? AND ano = ?";
     private static final String SELECT_ALL = "SELECT idcompetencia, mes, ano FROM competencia";
 
+    /**
+     * Recebe uma nova competência e a salva no banco de dados.
+     * @param id O ID da competência.
+     * @param mes O mês da competência.
+     * @param ano O ano da competência.
+     */
     @Override
     public void salvarCompetencia(int id, int mes, int ano) {
         try (Connection conn = ConnectionFactory.getConnection();
@@ -32,6 +41,11 @@ public class CompetenciaDAOImpl implements CompetenciaDAO {
         }
     }
 
+    /**
+     * Busca uma competência pelo seu ID.
+     * @param idcompetencia O ID da competência.
+     * @return A competência encontrada, ou null se não encontrada.
+     */
     @Override
     public CompetenciaDTO buscarPorId(int idcompetencia) {
         try (Connection conn = ConnectionFactory.getConnection();
@@ -51,6 +65,12 @@ public class CompetenciaDAOImpl implements CompetenciaDAO {
         return null;
     }
 
+    /**
+     * Busca uma competência pelo seu mês e ano.
+     * @param mes O mês da competência.
+     * @param ano O ano da competência.
+     * @return A competência encontrada, ou null se não encontrada.
+     */
     @Override
     public CompetenciaDTO buscarPorMesAno(int mes, int ano) {
         try (Connection conn = ConnectionFactory.getConnection();
@@ -72,6 +92,10 @@ public class CompetenciaDAOImpl implements CompetenciaDAO {
         return null;
     }
 
+    /**
+     * Busca todas as competências cadastradas.
+     * @return Uma lista com todas as competências.
+     */
     @Override
     public ArrayList<CompetenciaDTO> buscarTodos() {
         ArrayList<CompetenciaDTO> competencias = new ArrayList<>();
@@ -89,6 +113,10 @@ public class CompetenciaDAOImpl implements CompetenciaDAO {
         return competencias;
     }
 
+    /**
+     * Busca a última competência cadastrada.
+     * @return A última competência cadastrada, ou null se não encontrada.
+     */
     @Override
     public CompetenciaDTO buscarUltimaCompetencia() {
         String query = "SELECT idcompetencia, mes, ano FROM competencia ORDER BY idcompetencia DESC LIMIT 1";
@@ -108,6 +136,9 @@ public class CompetenciaDAOImpl implements CompetenciaDAO {
 
     /**
      * Mapeia a linha atual de um ResultSet para um CompetenciaDTO.
+     * @param rs O ResultSet a ser mapeado.
+     * @return O CompetenciaDTO mapeado.
+     * @throws SQLException Se ocorrer um erro ao acessar os dados do ResultSet.
      */
     private CompetenciaDTO mapearResultSetParaDTO(ResultSet rs) throws SQLException {
         int id = rs.getInt("idcompetencia");

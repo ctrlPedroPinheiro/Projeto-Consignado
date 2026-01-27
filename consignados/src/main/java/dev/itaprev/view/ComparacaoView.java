@@ -30,6 +30,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * Classe responsável pela visualização da comparação de consignados.
+ */
 public class ComparacaoView extends VBox {
 
     private ObservableList<ConsignadoDTO> listaAnalise;
@@ -64,6 +67,9 @@ public class ComparacaoView extends VBox {
     private Button btnSalvar;
     private Button btnMoverParaExcluidos;
 
+    /** 
+     * Construtor da classe ComparacaoView.
+     */
     public ComparacaoView(ResultadoComparacaoDTO resultado, int mes, int ano) {
         this.resultadoOriginal = resultado;
         this.idCompetencia = resultado.idCompetencia();
@@ -129,6 +135,10 @@ public class ComparacaoView extends VBox {
         this.getChildren().addAll(title, tabPane, painelSalvar);
     }
 
+    /**
+     * Cria o painel de análise.
+     * @return O painel de análise.
+     */
     private VBox criarPainelAnalise() {
         VBox painel = new VBox(10);
         painel.setPadding(new Insets(10));
@@ -159,6 +169,10 @@ public class ComparacaoView extends VBox {
         return painel;
     }
 
+    /**
+     * Cria o painel de acatados.
+     * @return O painel de acatados.
+     */
     private VBox criarPainelAcatados() {
         VBox painel = new VBox(10);
         painel.setPadding(new Insets(10));
@@ -187,6 +201,10 @@ public class ComparacaoView extends VBox {
         return painel;
     }
 
+    /**
+     * Cria o painel de excluídos.
+     * @return O painel de excluídos.
+     */
     private VBox criarPainelExcluidos() {
         VBox painel = new VBox(10);
         painel.setPadding(new Insets(10));
@@ -203,6 +221,12 @@ public class ComparacaoView extends VBox {
         return painel;
     }
 
+    /**
+     * Filtra os consignados com base no texto de busca.
+     * @param consignado
+     * @param textoBusca
+     * @return
+     */
     private boolean filtroConsignado(ConsignadoDTO consignado, String textoBusca) {
         if (textoBusca == null || textoBusca.isEmpty() || textoBusca.isBlank()) return true;
         String filtro = textoBusca.toLowerCase().trim();
@@ -210,6 +234,12 @@ public class ComparacaoView extends VBox {
         return consignado.nome().toLowerCase().contains(filtro);
     }
 
+    /**
+     * Filtra as mudanças com base no texto de busca.
+     * @param mudanca
+     * @param textoBusca
+     * @return
+     */
     private boolean filtroMudanca(MudancaDTO mudanca, String textoBusca) {
         if (textoBusca == null || textoBusca.isEmpty() || textoBusca.isBlank()) return true;
         String filtro = textoBusca.toLowerCase().trim();
@@ -217,6 +247,10 @@ public class ComparacaoView extends VBox {
         return mudanca.consignado().nome().toLowerCase().contains(filtro);
     }
 
+    /**
+     * Pergunta ao usuário o motivo da mudança.
+     * @return O motivo da mudança selecionado pelo usuário.
+     */
     private Optional<MotivoMudanca> perguntarMotivo() {
         ChoiceDialog<MotivoMudanca> dialog = new ChoiceDialog<>(MotivoMudanca.OUTROS, MotivoMudanca.values());
         
@@ -227,6 +261,9 @@ public class ComparacaoView extends VBox {
         return dialog.showAndWait();
     }
 
+    /**
+     * Move as mudanças selecionadas para a lista de excluídos.
+     */
     private void moverParaExcluidos() {
         List<MudancaDTO> selecionados = new ArrayList<>(this.tabelaAcatados.getSelectionModel().getSelectedItems());
 
@@ -239,6 +276,9 @@ public class ComparacaoView extends VBox {
         this.tabelaAcatados.getSelectionModel().clearSelection();
     }
 
+    /**
+     * Move os consignados selecionados para a lista de acatados.
+     */
     private void moverParaAcatados() {
         List<ConsignadoDTO> selecionados = new ArrayList<>(this.tabelaAnalise.getSelectionModel().getSelectedItems());
         if (selecionados.isEmpty()) return;
@@ -259,6 +299,9 @@ public class ComparacaoView extends VBox {
         this.tabelaAnalise.getSelectionModel().clearSelection();
     }
 
+    /**
+     * Desfaz a última ação realizada.
+     */
     private void desfazerUltimaAcao() {
         if (this.ultimoLoteAcatado == null || this.ultimoLoteAcatado.isEmpty()) return;
 
@@ -275,6 +318,9 @@ public class ComparacaoView extends VBox {
         atualizarContagemAbas();
     }
 
+    /**
+     * Reseta os campos de busca.
+     */
     private void resetarListas() {
         this.txtBuscaAnalise.clear();
         this.txtBuscaAcatados.clear();
@@ -310,12 +356,18 @@ public class ComparacaoView extends VBox {
         atualizarContagemAbas();
     }
 
+    /**
+     * Atualiza a contagem de abas.
+     */
     private void atualizarContagemAbas() {
         this.tabAnalise.setText("Divergentes (" + this.listaAnalise.size() + ")");
         this.tabAcatados.setText("Acatados (" + this.listaAcatados.size() + ")");
         this.tabExcluidos.setText("Excluídos (" + this.listaExcluidos.size() + ")");
     }
 
+    /**
+     * Salva as alterações realizadas.
+     */
     private void salvarAlteracoes() {
         List<MudancaDTO> paraAcatar = new ArrayList<>(this.listaAcatados);
         List<MudancaDTO> paraExcluir = new ArrayList<>(this.listaExcluidos);
@@ -425,6 +477,12 @@ public class ComparacaoView extends VBox {
         this.tabelaExcluidos.setDisable(true);
     }
     */
+    
+    /**
+     * Cria uma tabela para exibir os consignados.
+     * @param lista
+     * @return
+     */
     @SuppressWarnings("unchecked")
     private TableView<ConsignadoDTO> criarTabelaConsignados(ObservableList<ConsignadoDTO> lista) {
         TableView<ConsignadoDTO> tabela = new TableView<>();
@@ -463,6 +521,12 @@ public class ComparacaoView extends VBox {
         return tabela;
     }
 
+    /**
+     * Cria uma tabela para exibir as mudanças.
+     * @param lista
+     * @param listaFonte
+     * @return
+     */
     @SuppressWarnings("unchecked")
     private TableView<MudancaDTO> criarTabelaMudancas(ObservableList<MudancaDTO> lista, ObservableList<MudancaDTO> listaFonte) {
         TableView<MudancaDTO> tabela = new TableView<>();

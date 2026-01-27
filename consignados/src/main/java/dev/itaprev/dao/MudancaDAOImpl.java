@@ -15,12 +15,14 @@ import dev.itaprev.model.Consignado;
 import dev.itaprev.model.MotivoMudanca;
 import dev.itaprev.model.Mudanca;
 
+/**
+ * Implementação da interface MudancaDAO.
+ */
 public class MudancaDAOImpl implements MudancaDAO {
 
     private static final String INSERT_MUDANCA = 
         "INSERT INTO mudanca (tipo, consignado_idconsignado) VALUES (?, ?)";
 
-    // ADICIONADO: c.nome, c.cpf, c.matricula (Necessários para a View)
     private static final String SELECT_ALL_BY_COMPETENCIA = 
         "SELECT m.idmudanca, m.tipo, " +
         "c.idconsignado, c.contrato_numero, c.valor_prestacao, c.competencia_idcompetencia, " +
@@ -45,6 +47,10 @@ public class MudancaDAOImpl implements MudancaDAO {
         "JOIN consignado c ON m.consignado_idconsignado = c.idconsignado " +
         "WHERE m.tipo = ? AND c.competencia_idcompetencia = ?";
 
+    /**
+     * Salva uma nova mudança no banco de dados.
+     * @param mudanca O objeto a ser salvo.
+     */
     @Override
     public void salvarMudanca(Mudanca mudanca) {
         ConsignadoController consignadoController = new ConsignadoController();
@@ -64,6 +70,11 @@ public class MudancaDAOImpl implements MudancaDAO {
         }
     }
 
+    /**
+     * Busca todas as mudanças cadastradas.
+     * @param idcompetencia O ID da competência associada.
+     * @return Uma lista com todas as mudanças.
+     */
     @Override
     public List<MudancaDTO> buscarTodos(int idcompetencia) {
         List<MudancaDTO> mudancas = new ArrayList<>();
@@ -101,6 +112,11 @@ public class MudancaDAOImpl implements MudancaDAO {
         return mudancas;
     }
 
+    /**
+     * Busca uma mudança pelo ID do consignado.
+     * @param idconsignado O ID do consignado associado.
+     * @return A mudança encontrada, ou null se não existir.
+     */
     @Override
     public Mudanca buscarPorConsignado(int idconsignado) {
         Mudanca mudanca = null;
@@ -122,6 +138,12 @@ public class MudancaDAOImpl implements MudancaDAO {
         return mudanca;
     }
 
+    /**
+     * Busca uma mudança pelo motivo.
+     * @param motivo O motivo da mudança.
+     * @param idcompetencia O ID da competência associada.
+     * @return Uma lista com as mudanças encontradas.
+     */
     @Override
     public List<Mudanca> buscarPorMotivo(String motivo, int idcompetencia) {
         List<Mudanca> mudancas = new ArrayList<>();
@@ -144,11 +166,22 @@ public class MudancaDAOImpl implements MudancaDAO {
         return mudancas;
     }
 
+    /**
+     * Busca uma mudança pelo ID.
+     * @param idmudanca O ID da mudança.
+     * @return A mudança encontrada, ou null se não existir.
+     */
     @Override
     public Mudanca buscarPorId(int idmudanca) {
         throw new UnsupportedOperationException("Unimplemented method 'buscarPorId'");
     }
 
+    /**
+     * Monta um objeto Consignado a partir de um ResultSet.
+     * @param rs O ResultSet contendo os dados.
+     * @return O objeto Consignado montado.
+     * @throws SQLException Se ocorrer um erro ao acessar os dados do ResultSet.
+     */
     private Consignado montarConsignadoDoResultSet(ResultSet rs) throws SQLException {
         Consignado c = new Consignado();
         c.setContrato(rs.getString("contrato_numero"));

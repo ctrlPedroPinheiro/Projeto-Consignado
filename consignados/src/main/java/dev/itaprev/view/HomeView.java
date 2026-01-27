@@ -5,6 +5,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
+/**
+ * Classe responsável pela visualização da tela inicial.
+ */
 public class HomeView extends VBox {
 
     public HomeView() {
