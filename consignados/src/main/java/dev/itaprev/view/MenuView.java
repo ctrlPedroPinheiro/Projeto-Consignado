@@ -34,20 +34,25 @@ public class MenuView extends Application {
         borderPane = new BorderPane();
 
         MenuBar menuBar = new MenuBar();
-        Menu menuArquivo = new Menu("Arquivo");
+        Menu menuGeral = new Menu("Menu");
+        MenuItem homeItem = new MenuItem("Início");
         MenuItem importarItem = new MenuItem("Importar Consignados");
         MenuItem exportarItem = new MenuItem("Consultar Consignados");
         SeparatorMenuItem separator = new SeparatorMenuItem();
         MenuItem sairItem = new MenuItem("Sair");
-        menuArquivo.getItems().addAll(importarItem, exportarItem, separator, sairItem);
+        menuGeral.getItems().addAll(homeItem, importarItem, exportarItem, separator, sairItem);
 
         Menu menuAjuda = new Menu("Ajuda");
         MenuItem sobreItem = new MenuItem("Sobre");
         menuAjuda.getItems().add(sobreItem);
-        menuBar.getMenus().addAll(menuArquivo, menuAjuda);
-        
+        menuBar.getMenus().addAll(menuGeral, menuAjuda);
+
         sairItem.setOnAction(e -> Platform.exit());
 
+        homeItem.setOnAction(e -> {
+            navegarPara(new HomeView());
+        });
+         
         importarItem.setOnAction(e -> {
             navegarPara(new ImportarView()); 
         });
