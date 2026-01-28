@@ -1,5 +1,8 @@
 package dev.itaprev.dto;
 
+/**
+ * Data Transfer Object para Consignado.
+ */
 public record ConsignadoDTO(
     String contrato,
     String nome,

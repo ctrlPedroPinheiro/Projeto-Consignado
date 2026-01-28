@@ -2,6 +2,9 @@ package dev.itaprev.model;
 
 import java.util.Objects;
 
+/**
+ * Representa um Consignado com informações detalhadas.
+ */
 public class Consignado {
     private String contrato;
     private String nome;
@@ -71,5 +74,10 @@ public class Consignado {
                 ", valorPrestacao=" + valorPrestacao +
                 ", idCompetencia=" + idCompetencia +
                 '}';
+    }
+
+    public void setIdConsignado(int int1) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setIdConsignado'");
     }
 }

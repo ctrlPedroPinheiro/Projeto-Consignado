@@ -1,5 +1,8 @@
 package dev.itaprev.model;
 
+/**
+ * Representa uma Competência com mês, ano e ID.
+ */
 public class Competencia {
     private int mes;
     private int ano;

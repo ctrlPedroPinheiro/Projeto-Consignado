@@ -1,5 +1,8 @@
 package dev.itaprev.dto;
 
+/**
+ * Data Transfer Object para Competência.
+ */
 public record CompetenciaDTO( 
     int mes,
     int ano,

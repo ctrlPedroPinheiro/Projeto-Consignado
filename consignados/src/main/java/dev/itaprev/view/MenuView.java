@@ -14,32 +14,45 @@ import dev.itaprev.view.HomeView;
 import dev.itaprev.view.ImportarView;
 import dev.itaprev.view.ConsultaView;
 import dev.itaprev.view.SobreView;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 
+/**
+ * Classe responsável pela visualização do menu principal.
+ */
 @SuppressWarnings("unused")
 public class MenuView extends Application {
 
     private static BorderPane borderPane;
 
+    /**
+     * Inicia a aplicação.
+     */
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Comparador de Consignados");
         borderPane = new BorderPane();
 
         MenuBar menuBar = new MenuBar();
-        Menu menuArquivo = new Menu("Arquivo");
+        Menu menuGeral = new Menu("Menu");
+        MenuItem homeItem = new MenuItem("Início");
         MenuItem importarItem = new MenuItem("Importar Consignados");
         MenuItem exportarItem = new MenuItem("Consultar Consignados");
         SeparatorMenuItem separator = new SeparatorMenuItem();
         MenuItem sairItem = new MenuItem("Sair");
-        menuArquivo.getItems().addAll(importarItem, exportarItem, separator, sairItem);
+        menuGeral.getItems().addAll(homeItem, importarItem, exportarItem, separator, sairItem);
 
         Menu menuAjuda = new Menu("Ajuda");
         MenuItem sobreItem = new MenuItem("Sobre");
         menuAjuda.getItems().add(sobreItem);
-        menuBar.getMenus().addAll(menuArquivo, menuAjuda);
-        
+        menuBar.getMenus().addAll(menuGeral, menuAjuda);
+
         sairItem.setOnAction(e -> Platform.exit());
 
+        homeItem.setOnAction(e -> {
+            navegarPara(new HomeView());
+        });
+         
         importarItem.setOnAction(e -> {
             navegarPara(new ImportarView()); 
         });
@@ -56,11 +69,20 @@ public class MenuView extends Application {
         
         navegarPara(new HomeView()); 
 
-        Scene scene = new Scene(borderPane, 800, 600);
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        Dimension screenSize = toolkit.getScreenSize();
+        double screenWidth = screenSize.getWidth();
+        double screenHeight = screenSize.getHeight();
+
+        Scene scene = new Scene(borderPane, screenWidth*0.8, screenHeight*0.7);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
 
+    /**
+     * Navega para uma nova tela.
+     * @param novaTela A nova tela a ser exibida.
+     */
     public static void navegarPara(Node novaTela) {
         if (borderPane != null) {
             borderPane.setCenter(novaTela);
@@ -69,6 +91,10 @@ public class MenuView extends Application {
         }
     }
 
+    /**
+     * Inicia a aplicação.
+     * @param args
+     */
     public static void main(String[] args) {
         launch(args);
     }

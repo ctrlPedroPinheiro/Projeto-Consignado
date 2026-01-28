@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <style>
+        @page {
+            size: A4;
+            margin-top: 10mm;
+            margin-bottom: 10mm;
+            margin-left: 5mm;
+            margin-right: 5mm;
+        }
+        body { font-family: sans-serif; font-size: 10px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 5px; }
+        th { background-color: #005f73; color: white; padding: 4px; text-align: left; }
+        td { border: 1px solid #ddd; padding: 3px; }
+        
+        .text-right { text-align: right; }
+        .text-center { text-align: center; }
+        
+        tr:nth-child(even) { background-color: #f2f2f2; }
+        .cabecalho { text-align: center; margin-bottom: 5px; }
+        .data { color: #666; font-size: 10px; text-align: right;}
+        
+        .resumo { margin-top: 10px; border-top: 2px solid #005f73; padding-top: 10px; }
+
+        .nova-pagina { page-break-before: always; }
+    </style>
+</head>
+<body>
+
+    <div class="cabecalho">
+        <h2>RELATÓRIO CONSIGNADO CAIXA ECONÔMICA FEDERAL</h2>
+        <p class="data" th:text="'Gerado em: ' + ${dataGeracao}"></p>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>CONTRATO</th>
+                <th>NOME</th>
+                <th>CPF</th>
+                <th>MATRÍCULA</th>
+                <th class="text-center">PRAZO</th>
+                <th class="text-center">Nº PARC.</th>
+                <th class="text-right">VALOR</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="consignado : ${listaConsignados}">
+                <td th:text="${consignado.contrato}">00.0000.000</td>
+                <td th:text="${consignado.nome}">Nome do Cliente</td>
+                <td th:text="${consignado.cpf}">000.000.000-00</td>
+                
+                <td th:text="${consignado.matricula}">123456</td> 
+                
+                <td class="text-center" th:text="${consignado.prazoTotal}">0</td>
+                <td class="text-center" th:text="${consignado.numeroPrestacao}">0</td>
+                
+                <td class="text-right" th:text="'R$ ' + ${#numbers.formatDecimal(consignado.valorPrestacao, 1, 'POINT', 2, 'COMMA')}">R$ 0,00</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="resumo">
+        <h3 style="text-align: right;" 
+            th:text="'Total Geral: R$ ' + ${#numbers.formatDecimal(valorTotal, 1, 'POINT', 2, 'COMMA')}">
+            Total: R$ 0,00
+        </h3>
+        <h4 style="text-align: right;" th:text="'Quantidade de Registros: ' + ${quantidadeRegistros}">
+            Quantidade de Registros: 0
+        </h4>
+    </div>
+
+    <div class="nova-pagina"></div>
+
+    <div class="cabecalho">
+        <h2>RELATÓRIO DE MUDANÇAS DE CONSIGNADOS CAIXA ECONÔMICA FEDERAL</h2>
+        <p class="data" th:text="'Gerado em: ' + ${dataGeracao}"></p>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>CONTRATO</th>
+                <th>NOME</th>
+                <th>CPF</th>
+                <th class="text-right">VALOR</th>
+                <th>MOTIVO</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="mudanca : ${listaMudancas}">
+                <td th:text="${mudanca.consignado.contrato}">00.0000.000</td>
+                <td th:text="${mudanca.consignado.nome}">Nome do Cliente</td>
+                <td th:text="${mudanca.consignado.cpf}">000.000.000-00</td>
+                <td class="text-right" th:text="'R$ ' + ${#numbers.formatDecimal(mudanca.consignado.valorPrestacao, 1, 'POINT', 2, 'COMMA')}">R$ 0,00</td>
+                <td th:text="${mudanca.motivo}">Motivo da Mudança</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="resumo">
+        <h4 style="text-align: right;" th:text="'Quantidade de Registros: ' + ${quantidadeMudancas}">
+            Quantidade de Registros: 0
+        </h4>
+    </div>
+
+</body>
+</html>

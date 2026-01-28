@@ -14,12 +14,18 @@ import java.time.Year;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+/**
+ * Classe responsável pela visualização da tela de importação.
+ */
 public class ImportarView extends VBox {
 
     private ComboBox<Integer> mesCombo;
     private ComboBox<Integer> anoCombo;
     private Button selecionarArquivoBotao;
 
+    /**
+     * Construtor da classe ImportarView.
+     */
     public ImportarView() {
         Label title = new Label("Importar Consignados");
 
@@ -68,6 +74,9 @@ public class ImportarView extends VBox {
         this.setSpacing(15); 
     }
 
+    /**
+     * Valida os campos de entrada.
+     */
     private void validarCampos() {
         boolean habilitar = (mesCombo.getValue() != null && anoCombo.getValue() != null);
         selecionarArquivoBotao.setDisable(!habilitar);
