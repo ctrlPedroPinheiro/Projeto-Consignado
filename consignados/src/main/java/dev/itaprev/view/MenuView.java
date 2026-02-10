@@ -91,11 +91,4 @@ public class MenuView extends Application {
         }
     }
 
-    /**
-     * Inicia a aplicação.
-     * @param args
-     */
-    public static void main(String[] args) {
-        launch(args);
-    }
 }

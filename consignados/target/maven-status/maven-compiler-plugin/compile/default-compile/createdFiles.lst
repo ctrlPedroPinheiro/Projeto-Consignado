@@ -19,9 +19,11 @@ dev\itaprev\controller\ConsignadoController.class
 dev\itaprev\dto\MudancaDTO.class
 dev\itaprev\view\ConsultaView$1.class
 dev\itaprev\util\Exportador.class
+dev\itaprev\controller\LoginController.class
 dev\itaprev\model\Consignado.class
 dev\itaprev\dao\ConsignadoDAOImpl.class
 dev\itaprev\dao\MudancaDAO.class
+dev\itaprev\App.class
 dev\itaprev\model\Mudanca.class
 dev\itaprev\util\LeitorExcel.class
 dev\itaprev\factory\ConnectionFactory.class

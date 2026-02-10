@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+<?import java.net.URL?>
+
+<StackPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.itaprev.controller.LoginController">
+    <stylesheets>
+        <URL value="@login-style.css" />
+    </stylesheets>
+    
+    <children>
+        <VBox alignment="CENTER" spacing="20.0" maxWidth="350.0" maxHeight="450.0" styleClass="login-container">
+            <Label text="Acesso ao Sistema" styleClass="label-titulo" />
+            
+            <VBox spacing="5.0" alignment="CENTER_LEFT">
+                <Label text="Tipo de Conexão:" style="-fx-text-fill: #7f8c8d;" />
+                <ComboBox fx:id="comboConexao" maxWidth="Infinity" promptText="Selecione...">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="Localhost" />
+                            <String fx:value="LAN" />
+                        </FXCollections>
+                    </items>
+                </ComboBox>
+            </VBox>
+
+            <VBox spacing="5.0" alignment="CENTER_LEFT">
+                <Label text="Usuário:" style="-fx-text-fill: #7f8c8d;" />
+                <TextField fx:id="txtUsuario" promptText="Digite seu usuário" />
+            </VBox>
+
+            <VBox spacing="5.0" alignment="CENTER_LEFT">
+                <Label text="Senha:" style="-fx-text-fill: #7f8c8d;" />
+                <PasswordField fx:id="txtSenha" promptText="Digite sua senha" />
+            </VBox>
+
+            <Button text="CONECTAR" onAction="#handleLogin" maxWidth="Infinity" prefHeight="40.0" />
+            
+            <Label text="v1.0.0" style="-fx-font-size: 10px; -fx-text-fill: #bdc3c7;" />
+        </VBox>
+    </children>
+</StackPane>
