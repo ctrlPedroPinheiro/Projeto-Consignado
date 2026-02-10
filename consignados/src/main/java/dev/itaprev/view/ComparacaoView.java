@@ -71,6 +71,9 @@ public class ComparacaoView extends VBox {
      * Construtor da classe ComparacaoView.
      */
     public ComparacaoView(ResultadoComparacaoDTO resultado, int mes, int ano) {
+        this.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
+        this.getStyleClass().add("main-background");
+
         this.resultadoOriginal = resultado;
         this.idCompetencia = resultado.idCompetencia();
 
@@ -79,7 +82,7 @@ public class ComparacaoView extends VBox {
         this.setAlignment(Pos.TOP_CENTER);
 
         Label title = new Label("Resultado da Comparação Competência: " + mes + "/" + ano);
-        title.setFont(new Font("Arial", 24));
+        title.getStyleClass().add("header-title");
 
         List<ConsignadoDTO> divergentesDTO = resultadoOriginal.divergentes().stream()
             .map(c -> new ConsignadoDTO(c.getContrato(), c.getNome(), c.getCpf(), c.getMatricula(), c.getPrazoTotal(), c.getNumeroPrestacao(), c.getValorPrestacao(), this.idCompetencia))
@@ -124,7 +127,7 @@ public class ComparacaoView extends VBox {
         tabPane.getTabs().addAll(tabAnalise, tabAcatados, tabExcluidos);
 
         this.btnSalvar = new Button("Confirmar e Salvar Alterações");
-        this.btnSalvar.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
+        this.btnSalvar.getStyleClass().addAll("button", "button-success");
         this.btnSalvar.setPrefHeight(40);
         this.btnSalvar.setOnAction(e -> salvarAlteracoes());
 
@@ -142,9 +145,10 @@ public class ComparacaoView extends VBox {
     private VBox criarPainelAnalise() {
         VBox painel = new VBox(10);
         painel.setPadding(new Insets(10));
+        painel.getStyleClass().add("card");
 
         Label lblTitulo = new Label("Lista de Consignados Para Análise");
-        lblTitulo.setFont(new Font("Arial", 16));
+        lblTitulo.getStyleClass().add("stat-title");
 
         this.txtBuscaAnalise = new TextField();
         this.txtBuscaAnalise.setPromptText("Buscar por nome...");
@@ -155,9 +159,11 @@ public class ComparacaoView extends VBox {
         this.tabelaAnalise = criarTabelaConsignados(this.filteredAnalise);
 
         this.btnAcatar = new Button("Acatar Selecionado(s) ➔");
+        this.btnAcatar.getStyleClass().addAll("button", "button-success");
         this.btnAcatar.setOnAction(e -> moverParaAcatados());
 
         this.btnResetar = new Button("Resetar Listas");
+        this.btnResetar.getStyleClass().addAll("button", "button-warning");
         this.btnResetar.setOnAction(e -> resetarListas());
 
         Region spacer = new Region();
@@ -176,8 +182,10 @@ public class ComparacaoView extends VBox {
     private VBox criarPainelAcatados() {
         VBox painel = new VBox(10);
         painel.setPadding(new Insets(10));
+        painel.getStyleClass().add("card");
         Label lblTitulo = new Label("Lista de Consignados Acatados");
         lblTitulo.setFont(new Font("Arial", 16));
+        lblTitulo.getStyleClass().add("stat-title");
         this.txtBuscaAcatados = new TextField();
         this.txtBuscaAcatados.setPromptText("Buscar por nome...");
         this.txtBuscaAcatados.textProperty().addListener((obs, oldVal, newVal) -> {
@@ -186,10 +194,12 @@ public class ComparacaoView extends VBox {
         this.tabelaAcatados = criarTabelaMudancas(this.filteredAcatados, this.listaAcatados);
 
         this.btnDesfazer = new Button("⬅ Desfazer Última Ação");
+        this.btnDesfazer.getStyleClass().addAll("button", "button-warning");
         this.btnDesfazer.setOnAction(e -> desfazerUltimaAcao());
         this.btnDesfazer.setDisable(true);
 
         this.btnMoverParaExcluidos = new Button("Mover para Excluídos ➔");
+        this.btnMoverParaExcluidos.getStyleClass().addAll("button", "button-danger");
         this.btnMoverParaExcluidos.setOnAction(e -> moverParaExcluidos());
 
         Region spacer = new Region();
@@ -208,7 +218,9 @@ public class ComparacaoView extends VBox {
     private VBox criarPainelExcluidos() {
         VBox painel = new VBox(10);
         painel.setPadding(new Insets(10));
+        painel.getStyleClass().add("card");
         Label lblTitulo = new Label("Lista de Consignados Excluídos");
+        lblTitulo.getStyleClass().add("stat-title");
         lblTitulo.setFont(new Font("Arial", 16));
         this.txtBuscaExcluidos = new TextField();
         this.txtBuscaExcluidos.setPromptText("Buscar por nome...");
@@ -460,23 +472,6 @@ public class ComparacaoView extends VBox {
             }
         }
     }
-
-    /*
-    private void travarBotoesAposSalvar() {
-        this.btnSalvar.setDisable(true);
-        this.btnSalvar.setText("Alterações Salvas");
-        this.btnAcatar.setDisable(true);
-        this.btnResetar.setDisable(true);
-        this.btnDesfazer.setDisable(true);
-        this.btnMoverParaExcluidos.setDisable(true);
-        this.txtBuscaAnalise.setDisable(true);
-        this.txtBuscaAcatados.setDisable(true);
-        this.txtBuscaExcluidos.setDisable(true);
-        this.tabelaAnalise.setDisable(true);
-        this.tabelaAcatados.setDisable(true);
-        this.tabelaExcluidos.setDisable(true);
-    }
-    */
     
     /**
      * Cria uma tabela para exibir os consignados.

@@ -1,0 +1,209 @@
+/* Geral */
+.main-background {
+    -fx-background-color: #f4f7f6;
+    -fx-padding: 30;
+}
+
+/* Geral */
+.header-title {
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 32px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+
+/* Geral */
+.header-subtitle {
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 16px;
+    -fx-text-fill: #7f8c8d;
+    -fx-padding: 0 0 20 0;
+}
+
+/* Geral */
+.card {
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 5);
+    -fx-padding: 30;
+    -fx-min-width: 400px;
+}
+
+/* Sobre View */
+.description {
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 14px;
+    -fx-text-fill: #34495e;
+    -fx-padding: 20 0;
+}
+
+/* Sobre View */
+.info {
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 12px;
+    -fx-text-fill: #7f8c8d;
+    -fx-padding: 5 0 0 0;
+}
+
+/* Sobre View */
+.link {
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 12px;
+    -fx-text-fill: #2980b9;
+    -fx-padding: 5 0 0 0;
+    -fx-cursor: hand;
+    -fx-underline: true;
+}
+
+/* Home View */
+.stat-title {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #95a5a6;
+    -fx-letter-spacing: 1px;
+}
+
+/* Home View */
+.stat-value {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2980b9;
+}
+
+/* Home View */
+.instruction-text {
+    -fx-font-size: 14px;
+    -fx-text-fill: #7f8c8d;
+    -fx-padding: 20 0 0 0;
+}
+
+/* Home View */
+.action-highlight {
+    -fx-font-family: "Consolas", monospace;
+    -fx-font-size: 14px;
+    -fx-background-color: #ecf0f1;
+    -fx-text-fill: #e74c3c;
+    -fx-padding: 5 10;
+    -fx-background-radius: 4;
+    -fx-border-color: #bdc3c7;
+    -fx-border-radius: 4;
+    -fx-border-style: dashed;
+}
+
+/* Login View */
+.root {
+    -fx-background-color: #f4f7f9;
+}
+
+/* Login View */
+.login-container {
+    -fx-background-color: white;
+    -fx-padding: 30;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 5);
+}
+
+/* Login View */
+.label-titulo {
+    -fx-font-size: 18px;
+    -fx-text-fill: #2c3e50;
+    -fx-font-family: "Segoe UI", sans-serif;
+}
+
+/* Login View */
+.text-field, .password-field, .combo-box {
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+    -fx-border-color: #dcdde1;
+    -fx-padding: 8;
+    -fx-background-color: #ffffff;
+}
+
+/* Login View */
+.text-field:focused, .combo-box:focused {
+    -fx-border-color: #3498db;
+    -fx-border-width: 2;
+}
+
+/* Login View */
+.button {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+}
+
+/* Login View */
+.button:hover {
+    -fx-background-color: #2980b9;
+}
+
+/* Consulta View */
+.search-container {
+    -fx-background-color: #ffffff;
+    -fx-padding: 15;
+    -fx-background-radius: 8;
+    -fx-border-color: #dcdde1;
+    -fx-border-radius: 8;
+}
+
+/* Consulta View */
+.tab-pane {
+    -fx-tab-min-width: 150px;
+}
+
+/* Consulta View */
+.tab-pane .tab {
+    -fx-background-color: #e1e4e8;
+    -fx-background-radius: 5 5 0 0;
+    -fx-padding: 10 20;
+}
+
+/* Consulta View */
+.tab-pane .tab:selected {
+    -fx-background-color: #3498db;
+}
+
+/* Consulta View */
+.tab-pane .tab:selected .tab-label {
+    -fx-text-fill: white;
+}
+
+/* Consulta View */
+.table-view {
+    -fx-background-color: transparent;
+    -fx-border-color: #dcdde1;
+    -fx-border-radius: 5;
+}
+
+/* Consulta View */
+.table-view .column-header {
+    -fx-background-color: #f8f9fa;
+    -fx-border-color: #dcdde1;
+    -fx-border-width: 0 0 1 0;
+}
+
+/* Consulta View */
+.total-label {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+    -fx-padding: 5 0;
+}
+
+/* Consulta View */
+.button-success {
+    -fx-background-color: #2ecc71;
+}
+
+/* Consulta View */
+.button-success:hover {
+    -fx-background-color: #27ae60;
+}
+
+/* Consulta View */
+.text-danger {
+    -fx-text-fill: #e74c3c;
+    -fx-font-weight: bold;
+}

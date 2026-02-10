@@ -17,7 +17,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -53,6 +52,8 @@ public class ConsultaView extends VBox {
      * Construtor da classe ConsultaView.
      */
     public ConsultaView() {
+        this.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
+        this.getStyleClass().add("main-background");
 
         this.consignadoController = new ConsignadoController();
         this.mudancaController = new MudancaController();
@@ -63,7 +64,7 @@ public class ConsultaView extends VBox {
         this.setAlignment(Pos.TOP_CENTER);
 
         Label title = new Label("Consulta de Consignados e Mudanças");
-        title.setFont(new Font("Arial", 24));
+        title.getStyleClass().add("header-title");
 
         HBox boxSelecao = criarAreaSelecaoCompetencia();
 
@@ -95,7 +96,7 @@ public class ConsultaView extends VBox {
      */
     private HBox criarAreaSelecaoCompetencia() {
         Label lblComp = new Label("Selecione a Competência:");
-        lblComp.setStyle("-fx-font-weight: bold;");
+        lblComp.getStyleClass().add("stat-title");
 
         this.cmbCompetencia = new ComboBox<>();
         this.cmbCompetencia.setPromptText("Mês/Ano");
@@ -114,12 +115,12 @@ public class ConsultaView extends VBox {
         }
 
         this.btnPesquisar = new Button("Carregar Dados");
-        this.btnPesquisar.setStyle("-fx-base: #4a90e2; -fx-text-fill: white; -fx-font-weight: bold;");
+        this.btnPesquisar.getStyleClass().add("button");
         this.btnPesquisar.setOnAction(e -> carregarDados());
 
         HBox box = new HBox(10, lblComp, cmbCompetencia, btnPesquisar);
+        box.getStyleClass().add("card");
         box.setAlignment(Pos.CENTER_LEFT);
-        box.setPadding(new Insets(10, 0, 10, 0));
         return box;
     }
 
@@ -131,7 +132,7 @@ public class ConsultaView extends VBox {
         this.cmbGerarRelatorio = new ComboBox<>();
         this.cmbGerarRelatorio.setPromptText("Gerar Relatório");
         this.cmbGerarRelatorio.getItems().addAll(".pdf", ".xlsx");
-        this.cmbGerarRelatorio.setStyle("-fx-base: #2e7d32; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px;");
+        this.cmbGerarRelatorio.getStyleClass().addAll("button", "button-success");
         this.cmbGerarRelatorio.setPrefHeight(40);
         this.cmbGerarRelatorio.setOnAction(e -> acaoGerarRelatorio());
 
@@ -150,6 +151,7 @@ public class ConsultaView extends VBox {
         painel.setPadding(new Insets(10));
 
         HBox boxBusca = new HBox(10);
+        boxBusca.getStyleClass().add("search-container");
         boxBusca.setAlignment(Pos.CENTER_LEFT);
         Label lblBusca = new Label("Buscar:");
         this.txtBuscaConsignados = new TextField();
@@ -166,6 +168,7 @@ public class ConsultaView extends VBox {
         VBox.setVgrow(this.tabelaConsignados, Priority.ALWAYS);
 
         Label lblTotal = new Label();
+        lblTotal.getStyleClass().add("total-label");
         lblTotal.textProperty().bind(javafx.beans.binding.Bindings.size(this.filteredConsignados).asString("Total de registros: %d"));
         
         painel.getChildren().addAll(boxBusca, this.tabelaConsignados, lblTotal);
@@ -181,6 +184,7 @@ public class ConsultaView extends VBox {
         painel.setPadding(new Insets(10));
 
         HBox boxBusca = new HBox(10);
+        boxBusca.getStyleClass().add("search-container");
         boxBusca.setAlignment(Pos.CENTER_LEFT);
         Label lblBusca = new Label("Buscar:");
         this.txtBuscaMudancas = new TextField();
@@ -197,6 +201,7 @@ public class ConsultaView extends VBox {
         VBox.setVgrow(this.tabelaMudancas, Priority.ALWAYS);
 
         Label lblTotal = new Label();
+        lblTotal.getStyleClass().add("total-label");
         lblTotal.textProperty().bind(javafx.beans.binding.Bindings.size(this.filteredMudancas).asString("Total de alterações: %d"));
 
         painel.getChildren().addAll(boxBusca, this.tabelaMudancas, lblTotal);
@@ -396,7 +401,7 @@ public class ConsultaView extends VBox {
         colMotivo.setCellValueFactory(c -> new SimpleStringProperty(
             c.getValue().motivo() != null ? c.getValue().motivo().toString() : ""
         ));
-        colMotivo.setStyle("-fx-font-weight: bold; -fx-text-fill: #d32f2f;");
+        colMotivo.getStyleClass().add("text-danger");
 
         TableColumn<MudancaDTO, Double> colValor = new TableColumn<>("Valor");
         colValor.setCellValueFactory(c -> {

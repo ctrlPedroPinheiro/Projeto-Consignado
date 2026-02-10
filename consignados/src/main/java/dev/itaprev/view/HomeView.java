@@ -21,7 +21,7 @@ public class HomeView extends StackPane {
      */
     public HomeView() {
 
-        this.getStylesheets().add(getClass().getResource("/home-style.css").toExternalForm());
+        this.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
         this.getStyleClass().add("main-background");
 
         CompetenciaController competenciaController = new CompetenciaController();

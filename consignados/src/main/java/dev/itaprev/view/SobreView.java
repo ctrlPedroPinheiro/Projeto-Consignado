@@ -14,7 +14,7 @@ import java.net.URI;
 public class SobreView extends StackPane {
 
     public SobreView() {
-        this.getStylesheets().add(getClass().getResource("/sobre-style.css").toExternalForm());
+        this.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
         this.getStyleClass().add("main-background");
 
         VBox conteinerPrincipal = new VBox(15);

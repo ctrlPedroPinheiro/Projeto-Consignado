@@ -27,9 +27,14 @@ public class ImportarView extends VBox {
      * Construtor da classe ImportarView.
      */
     public ImportarView() {
+        this.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
+        this.getStyleClass().add("main-background");
+
         Label title = new Label("Importar Consignados");
+        title.getStyleClass().add("header-title");
 
         Label competenciaLabel = new Label("Selecione a Competência (Obrigatório):");
+        competenciaLabel.getStyleClass().add("stat-title");
         
         mesCombo = new ComboBox<>();
         mesCombo.setPromptText("Mês");
@@ -48,9 +53,11 @@ public class ImportarView extends VBox {
         competenciaBox.setAlignment(Pos.CENTER);
 
         selecionarArquivoBotao = new Button("Selecionar Arquivo...");
+        selecionarArquivoBotao.getStyleClass().add("button");
         selecionarArquivoBotao.setDisable(true); 
 
         Label description = new Label("Arquivos Excel (.xlsx, .xls)");
+        description.getStyleClass().add("stat-title");
 
         mesCombo.valueProperty().addListener((obs, oldVal, newVal) -> validarCampos());
         anoCombo.valueProperty().addListener((obs, oldVal, newVal) -> validarCampos());
@@ -69,9 +76,15 @@ public class ImportarView extends VBox {
             
         });
 
-        this.getChildren().addAll(title, competenciaLabel, competenciaBox, selecionarArquivoBotao, description);
-        this.setAlignment(Pos.CENTER);
-        this.setSpacing(15); 
+        VBox conteinerPrincipal = new VBox(20);
+        conteinerPrincipal.getStyleClass().add("card");
+        conteinerPrincipal.setAlignment(Pos.CENTER);
+        conteinerPrincipal.setMaxWidth(600); 
+
+        conteinerPrincipal.getChildren().addAll(title, competenciaLabel, competenciaBox, selecionarArquivoBotao, description);
+
+        this.getChildren().add(conteinerPrincipal);
+        this.setAlignment(Pos.CENTER); 
     }
 
     /**
