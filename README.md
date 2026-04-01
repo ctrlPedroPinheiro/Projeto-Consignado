@@ -23,7 +23,7 @@ O sistema foca em processar dados brutos de relatórios bancários para extrair 
 
 ## Como executar
 
-Certifique-se de ter o **JDK** instalado no seu Linux Lite.
+Certifique-se de ter o **JDK** instalado.
 
 1. **Clonar o repositório:**
    ```bash
