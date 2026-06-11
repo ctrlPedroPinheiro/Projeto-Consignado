@@ -1,0 +1,13 @@
+package pp.dev.econsig;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class EconsigApplicationTests {
+
+	@Test
+	void contextLoads() {
+	}
+
+}
