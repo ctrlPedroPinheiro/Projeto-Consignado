@@ -19,7 +19,7 @@ public class ConsignadoService {
         this.consignadoRepository = consignadoRepository;
     }
 
-    public ConsignadoDTO salvar(ConsignadoDTO consignadoDTO) {
+    public ConsignadoDTO criar(ConsignadoDTO consignadoDTO) {
         Competencia competencia = competenciaService.buscarEntidadePorId(consignadoDTO.competenciaId());
         Consignado consignado = new Consignado();
         consignado.setContrato(consignadoDTO.contrato());
@@ -30,8 +30,8 @@ public class ConsignadoService {
         consignado.setNumeroPrestacao(consignadoDTO.numeroPrestacao());
         consignado.setValorPrestacao(consignadoDTO.valorPrestacao());
         consignado.setCompetencia(competencia);
-        Consignado salvo = consignadoRepository.save(consignado);
-        return new ConsignadoDTO(salvo.getId(), salvo.getContrato(), salvo.getNome(), salvo.getCpf(), salvo.getMatricula(), salvo.getPrazoTotal(), salvo.getNumeroPrestacao(), salvo.getValorPrestacao(), salvo.getCompetencia().getId());
+        Consignado novo = consignadoRepository.save(consignado);
+        return new ConsignadoDTO(novo.getId(), novo.getContrato(), novo.getNome(), novo.getCpf(), novo.getMatricula(), novo.getPrazoTotal(), novo.getNumeroPrestacao(), novo.getValorPrestacao(), novo.getCompetencia().getId());
     }
 
     public void deletar(Long id) {

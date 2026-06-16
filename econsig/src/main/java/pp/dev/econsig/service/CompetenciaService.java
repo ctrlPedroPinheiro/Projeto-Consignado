@@ -15,12 +15,12 @@ public class CompetenciaService {
         this.competenciaRepository = competenciaRepository;
     }
 
-    public CompetenciaDTO salvar(CompetenciaDTO competenciaDTO) {
+    public CompetenciaDTO criar(CompetenciaDTO competenciaDTO) {
         Competencia competencia = new Competencia();
         competencia.setMes(competenciaDTO.mes());
         competencia.setAno(competenciaDTO.ano());
-        Competencia salvo = competenciaRepository.save(competencia);
-        return new CompetenciaDTO(salvo.getId(), salvo.getMes(), salvo.getAno());
+        Competencia novo = competenciaRepository.save(competencia);
+        return new CompetenciaDTO(novo.getId(), novo.getMes(), novo.getAno());
     }
 
     public void deletar(Long id) {

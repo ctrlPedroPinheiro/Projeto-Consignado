@@ -20,11 +20,11 @@ public class MudancaService {
         this.mudancaRepository = mudancaRepository;
     }
 
-    public MudancaDTO salvar(MudancaDTO mudancaDTO) {
+    public MudancaDTO criar(MudancaDTO mudancaDTO) {
         Consignado consignado = consignadoService.buscarEntidadePorId(mudancaDTO.consignadoId());
         Mudanca mudanca = new Mudanca(consignado, MotivoMudanca.valueOf(mudancaDTO.motivo()));
-        Mudanca salvo = mudancaRepository.save(mudanca);
-        return new MudancaDTO(salvo.getId(), salvo.getConsignado().getId(), salvo.getMotivo().name());
+        Mudanca novo = mudancaRepository.save(mudanca);
+        return new MudancaDTO(novo.getId(), novo.getConsignado().getId(), novo.getMotivo().name());
     }
 
     public void deletar(Long id) {
